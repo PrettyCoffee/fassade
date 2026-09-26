@@ -7,7 +7,7 @@ import { setup } from "goobrrr"
 import { App } from "./App"
 import { GlobalStyles } from "./GlobalStyles"
 
-setup(createElement)
+setup({ jsx: createElement })
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

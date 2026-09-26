@@ -1,10 +1,10 @@
-import { joinCssTemplate, type CssTemplate } from "./core/joinCssTemplate"
+import {
+  joinCssTemplate,
+  isCssTemplate,
+  type CssTemplate,
+} from "./core/cssTemplate"
 import { parser, type StyleNode } from "./core/parser"
 import { Styles } from "./core/styles"
-
-const isTemplate = (
-  value: TemplateStringsArray | string[] | StyleNode,
-): value is TemplateStringsArray | string[] => Array.isArray(value)
 
 /** Create styles, inject them into the DOM, and generate a css class. */
 export function css(styles: StyleNode): Styles
@@ -12,7 +12,7 @@ export function css(...args: CssTemplate["Args"]): Styles
 export function css(...args: [StyleNode] | CssTemplate["Args"]) {
   const [styles, ...values] = args
 
-  if (isTemplate(styles)) {
+  if (isCssTemplate(styles)) {
     return new Styles(parser.toObject(joinCssTemplate(styles, ...values)))
   }
   return new Styles(styles)

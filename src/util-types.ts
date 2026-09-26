@@ -1,3 +1,5 @@
+export type Resolve<T> = { [K in keyof T]: T[K] } & {}
+
 export type Conditional<T> = T | false | null | undefined
 
 type TemplateArgs<TValue> = [

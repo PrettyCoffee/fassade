@@ -19,3 +19,7 @@ export const joinCssTemplate: CssTemplate["Fn"] = (strings, ...values) =>
   strings
     .flatMap((string, index) => [string, getCssString(values[index])])
     .join("")
+
+export const isCssTemplate = (
+  value: TemplateStringsArray | string[] | StyleNode,
+): value is TemplateStringsArray | string[] => Array.isArray(value)

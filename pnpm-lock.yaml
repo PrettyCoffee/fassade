@@ -11,6 +11,9 @@ importers:
       '@pretty-cozy/oxlint-config':
         specifier: 0.1.0
         version: 0.1.0(oxfmt@0.67.0)(oxlint-tsgolint@0.25.0)(oxlint@1.82.0(oxlint-tsgolint@0.25.0))(tailwindcss@4.3.3)(typescript@7.0.2)
+      '@types/react':
+        specifier: 19.2.18
+        version: 19.2.18
       '@vitest/coverage-v8':
         specifier: 5.0.0
         version: 5.0.0(vitest@5.0.0)

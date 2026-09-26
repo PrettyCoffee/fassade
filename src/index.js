@@ -1,4 +1,5 @@
-export { styled, setup } from "./styled"
+export { styled } from "./styled"
+export { setup } from "./setup"
 export { extractCss } from "./core/update"
 export { css, glob, keyframes } from "./css"
 export { recipe } from "./recipe"

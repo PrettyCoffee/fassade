@@ -1,6 +1,6 @@
-import { styled } from "goobrrr"
+import { css, styled } from "goobrrr"
 
-const Heading = `
+const Heading = css`
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-head);

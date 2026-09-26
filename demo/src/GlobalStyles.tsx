@@ -3,7 +3,7 @@ import { createElement, FC } from "react"
 import { setup } from "goobrrr"
 import { createGlobalStyles } from "goobrrr/global"
 
-setup(createElement)
+setup({ jsx: createElement })
 
 export const GlobalStyles = createGlobalStyles`
   :root {

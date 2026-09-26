@@ -2,7 +2,7 @@ import { type StyleNode } from "./core/parser"
 import { Styles } from "./core/styles"
 import { type Conditional } from "./util-types"
 
-type RecipeFactory<TProps extends object> = (
+export type RecipeFactory<TProps extends object> = (
   props: TProps,
 ) => Conditional<Styles | StyleNode> | Conditional<Styles | StyleNode>[]
 

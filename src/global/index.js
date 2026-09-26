@@ -14,9 +14,7 @@ export const glob = (...args) => {
  *
  * @returns {Function}
  */
-export function createGlobalStyles() {
-  const fn = styled.call({ type: "global" }, "div").apply(null, arguments)
-
-  // Render hook: call the styled fn for side-effects, return null vnode.
-  return props => (fn(props), null)
+export function createGlobalStyles(...args) {
+  const styles = css(...args).withConfig({ type: "global" })
+  return () => (styles.class, null)
 }
