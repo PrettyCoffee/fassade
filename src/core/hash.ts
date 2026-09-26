@@ -39,6 +39,7 @@ const createStyles = (
       : type === "keyframes"
         ? "@keyframes " + className
         : "." + className,
+    type,
   )
 }
 

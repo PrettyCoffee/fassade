@@ -25,7 +25,7 @@ export class Styles {
 
   constructor(
     public readonly styles: StyleNode,
-    private readonly config: StylesConfig | void,
+    private readonly config?: StylesConfig,
   ) {}
 
   /** Inject the styles into the dom and retrieve a css class. */
@@ -43,7 +43,7 @@ export class Styles {
   }
 
   /** Create a new instance with a different config. */
-  public withConfig(config?: StylesConfig | void) {
+  public withConfig(config?: StylesConfig) {
     return new Styles(this.styles, config)
   }
 

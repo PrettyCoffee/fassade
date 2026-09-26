@@ -35,9 +35,9 @@
       "import": "./dist/global/index.js",
       "types": "./dist/global/index.d.ts"
     },
-    "./should-forward-prop": {
-      "import": "./dist/should-forward-prop/index.js",
-      "types": "./dist/should-forward-prop/index.d.ts"
+    "./plugins": {
+      "import": "./dist/plugins/index.js",
+      "types": "./dist/plugins/index.d.ts"
     }
   },
   "scripts": {

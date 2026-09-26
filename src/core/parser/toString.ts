@@ -1,4 +1,38 @@
+import type { Plugin } from "../../plugins/plugin"
+import { getSetup } from "../../setup"
+import { InjectionType } from "../hash"
 import { StyleNode } from "./types"
+
+interface HookContext {
+  injection?: InjectionType
+}
+
+type HookHandler<THookName extends keyof Plugin> = Exclude<
+  NonNullable<Plugin[THookName]>,
+  string
+>
+type HookProps<THookName extends keyof Plugin> = Parameters<
+  HookHandler<THookName>
+>[0]
+
+const runHook = <THookName extends keyof Plugin>(
+  hook: THookName,
+  props: HookProps<THookName>,
+  ctx: HookContext,
+) => {
+  const hooks = getSetup().plugins.map(
+    plugin => plugin[hook] as HookHandler<THookName>,
+  )
+  const out = hooks.reduce(
+    (props, hook) => {
+      props.result = hook?.(props as any) ?? props.result
+      return props
+    },
+    { ...props, ...ctx },
+  )
+
+  return out.result as any
+}
 
 const isAst = (value: StyleNode | string): value is StyleNode =>
   !!value && typeof value === "object"
@@ -11,7 +45,12 @@ interface Insert {
   block: (string: string, hoist: string[]) => void
 }
 
-type Parser<TValue> = (key: string, value: TValue, insert: Insert) => void
+type Parser<TValue> = (
+  key: string,
+  value: TValue,
+  insert: Insert,
+  ctx: HookContext,
+) => void
 
 type Matcher = { matcher: RegExp } & (
   | { type: "string"; handler: Parser<string> }
@@ -22,43 +61,50 @@ const matchers: Matcher[] = [
   {
     matcher: /^@import/,
     type: "string",
-    handler(key, value, insert) {
-      // TODO: throw if used in css.class / styled (not used in glob)
-      insert.prepend(`${key} ${value};`)
+    handler(key, value) {
+      throw new Error(
+        `CSS imports are not supported by goobrrr.\nImport: ${key} ${value}`,
+      )
     },
   },
   {
     matcher: /^(@keyframes|@font-face)/,
     type: "ast",
-    handler(key, value, insert) {
-      const { content } = build(value)
-      // TODO: throw if used in css.class / styled (not used in glob)
-      insert.prepend(`${key}{${content}}`)
+    handler(key, value, insert, ctx) {
+      const { content } = build(value, ctx)
+      insert.prepend(
+        runHook("buildBlock", { selector: key, node: value, content }, ctx) ??
+          "",
+      )
     },
   },
   {
     matcher: /^(?!@import|@keyframes|@font-face)/,
     type: "ast",
-    handler(key, value, insert) {
-      const { hoisted, content } = build(value)
-      insert.block(`${key}{${content}}`, hoisted)
+    handler(key, value, insert, ctx) {
+      const { hoisted, content } = build(value, ctx)
+      insert.block(
+        runHook("buildBlock", { selector: key, node: value, content }, ctx) ??
+          "",
+        hoisted,
+      )
     },
   },
   {
     matcher: /^[^@]/,
     type: "string",
-    handler(jsKey, value, insert) {
+    handler(jsKey, value, insert, ctx) {
       // Preserve CSS variable names
       const key = jsKey.startsWith("--")
         ? jsKey
         : jsKey.replaceAll(/[A-Z]/g, "-$&").toLowerCase()
 
-      insert.line(`${key}:${value.replaceAll(/\s+/gm, " ")};`)
+      insert.line(runHook("buildRule", { key, value }, ctx) ?? "")
     },
   },
 ]
 
-const build = (obj: StyleNode) => {
+const build = (obj: StyleNode, ctx: HookContext) => {
   let hoisted: string[] = []
   let current = ""
   const blocks: string[] = []
@@ -91,6 +137,7 @@ const build = (obj: StyleNode) => {
       key,
       value as string & StyleNode, // type validation is handled above
       insert,
+      ctx,
     )
   })
 
@@ -98,8 +145,16 @@ const build = (obj: StyleNode) => {
   return { hoisted, content }
 }
 
-export const toString = (node: StyleNode, selector?: string) => {
-  const { hoisted, content } = build(!selector ? node : { [selector]: node })
-  const sorted = hoisted.toSorted(line => (line.startsWith("@import") ? -1 : 1))
-  return `${sorted.join("")}${content}`
+export const toString = (
+  node: StyleNode,
+  selector?: string,
+  type?: InjectionType,
+): string => {
+  const ctx: HookContext = { injection: type }
+  const tree = runHook("start", { selector, node }, ctx) ?? node
+  const { hoisted, content } = build(
+    !selector ? tree : { [selector]: tree },
+    ctx,
+  )
+  return runHook("end", { result: `${hoisted.join("")}${content}` }, ctx)
 }
