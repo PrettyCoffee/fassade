@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { styled } from "goobrrr"
+import { styled } from "#lib/goobrrr"
 
 import { Button } from "./components/button"
 import { ButtonList } from "./components/button-list"

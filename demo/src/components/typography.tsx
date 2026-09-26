@@ -1,4 +1,4 @@
-import { css, styled } from "goobrrr"
+import { css, styled } from "#lib/goobrrr"
 
 const Heading = css`
   font-family: var(--heading);

@@ -1,9 +1,4 @@
-import { createElement, FC } from "react"
-
-import { setup } from "goobrrr"
-import { createGlobalStyles } from "goobrrr/global"
-
-setup({ jsx: createElement })
+import { createGlobalStyles } from "#lib/goobrrr"
 
 export const GlobalStyles = createGlobalStyles`
   :root {
@@ -76,4 +71,4 @@ export const GlobalStyles = createGlobalStyles`
   p {
     margin: 0;
   }
-` as FC
+`
