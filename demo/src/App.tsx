@@ -8,7 +8,7 @@ import { Divider } from "./components/divider"
 import { H1, H2, Code } from "./components/typography"
 import { useMediaQuery } from "./hooks/useMediaQuery"
 
-const MainSection = styled("section")`
+const MainSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -22,7 +22,7 @@ const MainSection = styled("section")`
   }
 `
 
-const SideSection = styled("section")`
+const SideSection = styled.section`
   flex: 1;
   padding: 32px;
   text-align: left;
@@ -39,7 +39,7 @@ const SideSection = styled("section")`
   }
 `
 
-const Stack = styled("div")`
+const Stack = styled.div`
   display: flex;
 
   @media (max-width: 1024px) {

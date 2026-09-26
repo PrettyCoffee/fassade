@@ -1,6 +1,6 @@
 import { styled } from "goobrrr"
 
-const Border = styled("span")`
+const Border = styled.span`
   position: relative;
   display: block;
   background: var(--border);

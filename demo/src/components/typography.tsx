@@ -6,7 +6,7 @@ const Heading = css`
   color: var(--text-head);
 `
 
-export const H1 = styled("h1")`
+export const H1 = styled.h1`
   ${Heading}
   font-size: 56px;
   letter-spacing: -1.68px;
@@ -17,7 +17,7 @@ export const H1 = styled("h1")`
   }
 `
 
-export const H2 = styled("h1")`
+export const H2 = styled.h1`
   ${Heading}
   font-size: 24px;
   line-height: 118%;
@@ -28,7 +28,7 @@ export const H2 = styled("h1")`
   }
 `
 
-export const Code = styled("code")`
+export const Code = styled.code`
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;

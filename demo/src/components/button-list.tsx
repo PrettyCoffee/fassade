@@ -2,7 +2,7 @@ import { Children, PropsWithChildren } from "react"
 
 import { styled } from "goobrrr"
 
-const List = styled("ul")`
+const List = styled.ul`
   padding: 0;
   display: flex;
   gap: 8px;
@@ -22,7 +22,7 @@ const List = styled("ul")`
   }
 `
 
-const ListItem = styled("li")`
+const ListItem = styled.li`
   list-style: none;
   @media (max-width: 1024px) {
     flex: 1 1 calc(50% - 8px);
