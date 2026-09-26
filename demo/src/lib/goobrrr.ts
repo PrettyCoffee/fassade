@@ -1,9 +1,12 @@
 import { createElement } from "react"
 
 import { setup } from "goobrrr"
-import { minify } from "goobrrr/plugins"
+import { pretty, minify } from "goobrrr/plugins"
 
-setup({ jsx: createElement, plugins: [minify()] })
+setup({
+  jsx: createElement,
+  plugins: import.meta.env.DEV ? [pretty()] : [minify()],
+})
 
 export { css, recipe, styled, keyframes } from "goobrrr"
 export { createGlobalStyles } from "goobrrr/global"
