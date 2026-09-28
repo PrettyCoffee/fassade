@@ -9,4 +9,4 @@ setup({
 })
 
 export { css, recipe, keyframes } from "goobrrr"
-export { styled, createGlobalStyles } from "goobrrr/jsx"
+export { styled, Global } from "goobrrr/jsx"

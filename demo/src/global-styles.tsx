@@ -1,6 +1,6 @@
-import { createGlobalStyles } from "#lib/goobrrr"
+import { css, Global } from "#lib/goobrrr"
 
-export const GlobalStyles = createGlobalStyles`
+const globalStyles = css`
   :root {
     --text: #6b6375;
     --text-head: #08060d;
@@ -14,8 +14,8 @@ export const GlobalStyles = createGlobalStyles`
     --shadow:
       rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-    --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-    --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+    --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+    --heading: system-ui, "Segoe UI", Roboto, sans-serif;
     --mono: ui-monospace, Consolas, monospace;
 
     font: 18px/145% var(--sans);
@@ -72,3 +72,5 @@ export const GlobalStyles = createGlobalStyles`
     margin: 0;
   }
 `
+
+export const GlobalStyles = () => <Global styles={globalStyles} />
