@@ -19,6 +19,15 @@ const parseBlock = (val: string) => {
 
 type Tree = (StyleNode | undefined)[]
 
+const getNextKey = (key: string, tree: Tree) => {
+  const node = tree[0]
+  if (!node?.[key]) return key
+
+  let nextKey = key
+  for (let index = 0; node[nextKey]; index++) nextKey = `${key}\0${index}`
+  return nextKey
+}
+
 /** Convert a css style string into an object. */
 export const toObject = (styles: string) => {
   const tree: Tree = [{}]
@@ -30,10 +39,12 @@ export const toObject = (styles: string) => {
     if (block.close) {
       tree.shift() // Remove the current entry
     } else if (block.selector) {
-      tree[0][block.selector] ??= {}
-      tree.unshift(tree[0][block.selector] as StyleNode)
+      const selector = getNextKey(block.selector, tree)
+      tree[0][selector] ??= {}
+      tree.unshift(tree[0][selector] as StyleNode)
     } else if (block.name) {
-      tree[0][block.name] = clean(block.value)
+      const name = getNextKey(block.name, tree)
+      tree[0][name] = clean(block.value)
     }
   }
 

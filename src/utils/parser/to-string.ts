@@ -77,9 +77,9 @@ const matchers: Matcher[] = [
     type: "ast",
     handler(key, value, insert, ctx) {
       const { content } = build(value, ctx)
+      const selector = key.split("\0")[0] ?? ""
       insert.prepend(
-        runHook("buildBlock", { selector: key, node: value, content }, ctx) ??
-          "",
+        runHook("buildBlock", { selector, node: value, content }, ctx) ?? "",
       )
     },
   },
@@ -88,9 +88,9 @@ const matchers: Matcher[] = [
     type: "ast",
     handler(key, value, insert, ctx) {
       const { hoisted, content } = build(value, ctx)
+      const selector = key.split("\0")[0] ?? ""
       insert.block(
-        runHook("buildBlock", { selector: key, node: value, content }, ctx) ??
-          "",
+        runHook("buildBlock", { selector, node: value, content }, ctx) ?? "",
         hoisted,
       )
     },
@@ -102,7 +102,8 @@ const matchers: Matcher[] = [
       // Preserve CSS variable names
       const key = jsKey.startsWith("--")
         ? jsKey
-        : jsKey.replaceAll(/[A-Z]/g, "-$&").toLowerCase()
+        : (jsKey.split("\0")[0]?.replaceAll(/[A-Z]/g, "-$&").toLowerCase() ??
+          "")
 
       insert.line(runHook("buildRule", { key, value }, ctx) ?? "")
     },

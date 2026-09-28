@@ -15,8 +15,8 @@ export const update = (
   append?: boolean,
   cssToReplace?: string,
 ) => {
-  if (cssToReplace) {
-    sheet.data = sheet.data?.replace(cssToReplace, css)
+  if (cssToReplace && sheet.data?.includes(cssToReplace)) {
+    sheet.data = sheet.data.replace(cssToReplace, css)
   } else if (!sheet.data?.includes(css)) {
     sheet.data = append ? css + sheet.data : sheet.data + css
   }

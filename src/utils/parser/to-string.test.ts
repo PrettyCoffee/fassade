@@ -50,10 +50,17 @@ const cases: TestCase[] = [
   {
     name: "font face",
     input: {
-      "@font-face": { fontFamily: "Example", src: "url(example.woff2)" },
+      "@font-face": { fontFamily: "Example" },
+      "@font-face\u00000": { fontFamily: "Example2" },
     },
     selector: "",
-    css: "@font-face{font-family:Example;src:url(example.woff2);}",
+    css: "@font-face{font-family:Example;}@font-face{font-family:Example2;}",
+  },
+  {
+    name: "repeated properties",
+    input: { color: "red", "color\u00000": "blue" },
+    selector: "",
+    css: "color:red;color:blue;",
   },
 ]
 

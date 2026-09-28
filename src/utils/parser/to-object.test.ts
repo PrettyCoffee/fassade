@@ -75,10 +75,16 @@ const cases: TestCase[] = [
   },
   {
     name: "font face rule",
-    css: "@font-face { font-family: Example; src: url(example.woff2); }",
+    css: "@font-face { font-family: Example; } @font-face { font-family: Example2; }",
     ast: {
-      "@font-face": { "font-family": "Example", src: "url(example.woff2)" },
+      "@font-face": { "font-family": "Example" },
+      "@font-face\u00000": { "font-family": "Example2" },
     },
+  },
+  {
+    name: "repeated properties",
+    css: "color:red;color:blue;",
+    ast: { color: "red", "color\u00000": "blue" },
   },
 ]
 
