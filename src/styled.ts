@@ -1,7 +1,7 @@
 import { type JSX } from "react"
 
-import { CssTemplate, isCssTemplate } from "./core/cssTemplate"
-import { StyleNode } from "./core/parser"
+import { type CssTemplate, isCssTemplate } from "./core/cssTemplate"
+import { type StyleNode } from "./core/parser"
 import { Styles } from "./core/styles"
 import { css } from "./css"
 import { recipe, type RecipeFactory } from "./recipe"
@@ -42,6 +42,12 @@ interface SFCMeta<TTypeProps extends object, TStyledProps extends object> {
   z__styledProps?: TStyledProps
 }
 
+type SFCResult<T extends ElementType> = T extends string
+  ? VNode
+  : T extends FC | SFC<any, any, any>
+    ? ReturnType<T>
+    : never
+
 interface SFC<
   TDefaultType extends ElementType,
   TProps extends object,
@@ -50,7 +56,7 @@ interface SFC<
   <TType extends ElementType = TDefaultType>(
     this: StyledContext<TProps> | void,
     props: StyledProps<TType, TProps>,
-  ): VNode | Promise<VNode>
+  ): SFCResult<TDefaultType>
 
   displayName: string | undefined
   filterProps: (filter: (keyof TProps)[]) => SFC<TDefaultType, TProps, TStyles>
