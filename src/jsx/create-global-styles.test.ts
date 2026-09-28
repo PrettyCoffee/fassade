@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 
+import { getCsrSheet, GOOBRRR_ID } from "../utils/style-sheet"
 import { createGlobalStyles } from "./create-global-styles"
 
 describe("createGlobalStyles", () => {
@@ -10,12 +11,9 @@ describe("createGlobalStyles", () => {
       }
     `
 
-    expect(document.getElementById("_goobrrr")).toBeNull()
-
+    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
     expect(GlobalStyles()).toBeNull()
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
-      "body{margin:0;}",
-    )
+    expect(getCsrSheet().data).toBe("body{margin:0;}")
   })
 
   it("accepts style objects", () => {
@@ -25,8 +23,6 @@ describe("createGlobalStyles", () => {
 
     GlobalStyles()
 
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
-      "html{font-family:sans-serif;}",
-    )
+    expect(getCsrSheet().data).toBe("html{font-family:sans-serif;}")
   })
 })

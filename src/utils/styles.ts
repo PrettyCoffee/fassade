@@ -1,4 +1,3 @@
-import { getSheet } from "./get-sheet"
 import { hash, type InjectionType } from "./hash"
 import { parser, type StyleNode } from "./parser"
 
@@ -35,7 +34,7 @@ export class Styles {
   public get class() {
     if (!this._class) {
       const { append, type } = this.config ?? {}
-      this._class = hash(this.styles, getSheet(), append, type)
+      this._class = hash(this.styles, append, type)
     }
     return this._class
   }

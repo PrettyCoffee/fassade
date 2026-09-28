@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { css, glob, keyframes } from "./css"
+import { getCsrSheet, GOOBRRR_ID } from "./utils/style-sheet"
 import { Styles } from "./utils/styles"
 
 describe("Test css", () => {
@@ -28,14 +29,12 @@ describe("Test css", () => {
   it("injects regular styles only when the class is accessed", () => {
     const styles = css({ color: "red" })
 
-    expect(document.getElementById("_goobrrr")).toBeNull()
+    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
 
     const className = styles.class
 
     expect(className).toBeTruthy()
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
-      `.${className}{color:red;}`,
-    )
+    expect(getCsrSheet().data).toBe(`.${className}{color:red;}`)
   })
 })
 
@@ -48,9 +47,7 @@ describe("Test glob", () => {
       }
     `
 
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
-      "body{margin:0;}",
-    )
+    expect(getCsrSheet().data).toBe("body{margin:0;}")
   })
 
   it("creates multiple global font-faces", () => {
@@ -66,7 +63,7 @@ describe("Test glob", () => {
       }
     `
 
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
+    expect(getCsrSheet().data).toBe(
       '@font-face{font-family:"Noto Serif";font-style:normal;}@font-face{font-family:"Noto Serif";font-style:italic;}',
     )
   })
@@ -84,7 +81,7 @@ describe("Test keyframes", () => {
     `
 
     expect(animationName).toBeTruthy()
-    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
+    expect(getCsrSheet().data).toBe(
       `@keyframes ${animationName}{from{opacity:0;}to{opacity:1;}}`,
     )
   })
