@@ -68,4 +68,10 @@ describe("Test parse", () => {
   it.each(cases)("parses $name", ({ input, selector, css }) => {
     expect(toString(input, selector)).toBe(css)
   })
+
+  it("rejects @import statements", () => {
+    expect(() => toString({ "@import": "url('./sheet.css')" })).toThrow(
+      "CSS imports are not supported",
+    )
+  })
 })
