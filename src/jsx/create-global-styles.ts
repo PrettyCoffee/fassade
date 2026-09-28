@@ -1,14 +1,8 @@
-import { type CssTemplate } from "../core/css-template"
-import { type StyleNode } from "../core/parser"
 import { css } from "../css"
+import { type CssTemplate } from "../utils/css-template"
+import { type StyleNode } from "../utils/parser"
 
 type GlobalStyleNode = Record<string, StyleNode>
-
-/** CSS Global function to declare global styles. */
-export const glob = (...args: CssTemplate["Args"] | [GlobalStyleNode]) => {
-  // oxlint-disable-next-line no-unused-expressions
-  css(...(args as CssTemplate["Args"])).withConfig({ type: "global" }).class
-}
 
 /** Creates the global styles component to be used in jsx. */
 export function createGlobalStyles(

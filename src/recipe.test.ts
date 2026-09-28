@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest"
 
-import { Styles } from "./core/styles"
 import { css } from "./css"
 import { recipe } from "./recipe"
+import { Styles } from "./utils/styles"
 
 describe("Test recipe", () => {
   it("passes props to the factory and returns its styles", () => {

@@ -1,6 +1,6 @@
-import { type Conditional, type Template } from "../util-types"
 import { parser, type StyleNode } from "./parser"
 import { Styles } from "./styles"
+import { type Conditional, type Template } from "./util-types"
 
 export type CssTemplate = Template<
   | Conditional<Styles | StyleNode | string | number>

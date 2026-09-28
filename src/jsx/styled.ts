@@ -1,12 +1,12 @@
 import { type JSX } from "react"
 
-import { type CssTemplate, isCssTemplate } from "./core/css-template"
-import { type StyleNode } from "./core/parser"
-import { Styles } from "./core/styles"
-import { css } from "./css"
-import { recipe, type RecipeFactory } from "./recipe"
-import { getSetup } from "./setup"
-import { type Resolve } from "./util-types"
+import { css } from "../css"
+import { recipe, type RecipeFactory } from "../recipe"
+import { getSetup } from "../setup"
+import { type CssTemplate, isCssTemplate } from "../utils/css-template"
+import { type StyleNode } from "../utils/parser"
+import { Styles } from "../utils/styles"
+import { type Resolve } from "../utils/util-types"
 
 type VNode = Iterable<VNode> | JSX.Element | string | boolean | null | undefined
 interface FC<TProps = {}> {

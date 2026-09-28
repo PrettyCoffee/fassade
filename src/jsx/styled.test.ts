@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { setup } from "./setup"
+import { setup } from "../setup"
 import { styled } from "./styled"
 
 describe("Test styled", () => {

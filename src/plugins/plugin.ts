@@ -1,5 +1,5 @@
-import { type InjectionType } from "../core/hash"
-import { type StyleNode } from "../core/parser/types"
+import { type InjectionType } from "../utils/hash"
+import { type StyleNode } from "../utils/parser/types"
 
 interface BaseProps {
   /** The type of injection which is being built. */

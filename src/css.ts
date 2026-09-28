@@ -2,9 +2,9 @@ import {
   joinCssTemplate,
   isCssTemplate,
   type CssTemplate,
-} from "./core/css-template"
-import { type StyleNode } from "./core/parser"
-import { Styles } from "./core/styles"
+} from "./utils/css-template"
+import { type StyleNode } from "./utils/parser"
+import { Styles } from "./utils/styles"
 
 /** Create styles, inject them into the DOM, and generate a css class. */
 export function css(styles: StyleNode): Styles

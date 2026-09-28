@@ -1,6 +1,6 @@
-import { type StyleNode } from "./core/parser"
-import { Styles } from "./core/styles"
-import { type Conditional } from "./util-types"
+import { type StyleNode } from "./utils/parser"
+import { Styles } from "./utils/styles"
+import { type Conditional } from "./utils/util-types"
 
 export type RecipeFactory<TProps extends object> = (
   props: TProps,
