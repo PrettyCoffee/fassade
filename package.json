@@ -44,7 +44,7 @@
     "build": "tsdown",
     "dev": "pnpm run dev:lib & pnpm run dev:demo",
     "dev:lib": "pnpm run build --watch",
-    "dev:demo": "cd demo && pnpm run dev",
+    "dev:demo": "cd demos/vite && pnpm run dev",
     "test": "vitest run",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest watch",

@@ -9,4 +9,4 @@ trustPolicy: no-downgrade
 ignoreWorkspaceRootCheck: true
 packages:
   - ./
-  - demo
+  - demos/*

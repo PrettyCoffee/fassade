@@ -1,12 +1,9 @@
 import { useState } from "react"
 
-import { styled } from "#lib/goobrrr"
+import { Button, Divider, H1, H2, Code, ButtonList } from "demo-lib/components"
+import { useMediaQuery } from "demo-lib/hooks"
 
-import { Button } from "./components/button"
-import { ButtonList } from "./components/button-list"
-import { Divider } from "./components/divider"
-import { H1, H2, Code } from "./components/typography"
-import { useMediaQuery } from "./hooks/use-media-query"
+import { styled } from "./goobrrr"
 
 const MainSection = styled.section`
   display: flex;

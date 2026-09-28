@@ -1,4 +1,4 @@
-import { css, Global } from "#lib/goobrrr"
+import { css, Global } from "./goobrrr"
 
 const globalStyles = css`
   :root {

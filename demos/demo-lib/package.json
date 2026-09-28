@@ -1,0 +1,17 @@
+{
+  "name": "demo-lib",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./components": "./src/components/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./goobrrr": "./src/goobrrr.ts"
+  },
+  "dependencies": {
+    "goobrrr": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "8.2.2"
+  }
+}

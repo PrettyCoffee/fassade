@@ -1,4 +1,4 @@
-import { css, styled } from "#lib/goobrrr"
+import { css, styled } from "../goobrrr"
 
 interface ButtonProps {
   look?: "primary" | "secondary"
