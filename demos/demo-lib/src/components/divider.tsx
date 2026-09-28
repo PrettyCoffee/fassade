@@ -1,4 +1,4 @@
-import { styled } from "#lib/goobrrr"
+import { styled } from "../goobrrr"
 
 const Border = styled.span`
   position: relative;

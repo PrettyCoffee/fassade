@@ -8,5 +8,5 @@ setup({
   plugins: import.meta.env.DEV ? [pretty(), strict()] : [minify()],
 })
 
-export { css, recipe, keyframes } from "goobrrr"
-export { styled, Global } from "goobrrr/jsx"
+export * from "goobrrr"
+export * from "goobrrr/jsx"

@@ -1,12 +1,17 @@
 import { useState } from "react"
 
-import { styled } from "#lib/goobrrr"
+import {
+  Button,
+  Divider,
+  H1,
+  H2,
+  Code,
+  ButtonList,
+  Icon,
+} from "demo-lib/components"
+import { useMediaQuery } from "demo-lib/hooks"
 
-import { Button } from "./components/button"
-import { ButtonList } from "./components/button-list"
-import { Divider } from "./components/divider"
-import { H1, H2, Code } from "./components/typography"
-import { useMediaQuery } from "./hooks/use-media-query"
+import { styled } from "./goobrrr"
 
 const MainSection = styled.section`
   display: flex;
@@ -70,9 +75,7 @@ export const App = () => {
 
       <Stack>
         <SideSection>
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon" />
-          </svg>
+          <Icon icon="docs" />
           <H2>Ressources</H2>
           <p>Seeking more details?</p>
           <ButtonList>
@@ -96,9 +99,7 @@ export const App = () => {
         <Divider orientation={isMobile ? "horizontal" : "vertical"} />
 
         <SideSection>
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon" />
-          </svg>
+          <Icon icon="social" />
           <H2>Contribution</H2>
           <p>Help to improve the project</p>
           <ButtonList>
