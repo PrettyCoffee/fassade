@@ -1,13 +1,9 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { css, glob, keyframes } from "./css"
 import { Styles } from "./utils/styles"
 
 describe("Test css", () => {
-  afterEach(() => {
-    document.getElementById("_goobrrr")?.remove()
-  })
-
   it("creates Styles from an object", () => {
     const styles = css({ color: "red", marginTop: 0 })
 
@@ -44,10 +40,6 @@ describe("Test css", () => {
 })
 
 describe("Test glob", () => {
-  afterEach(() => {
-    document.getElementById("_goobrrr")?.remove()
-  })
-
   it("creates global styles", () => {
     // oxlint-disable-next-line no-unused-expressions
     glob`
@@ -81,10 +73,6 @@ describe("Test glob", () => {
 })
 
 describe("Test keyframes", () => {
-  afterEach(() => {
-    document.getElementById("_goobrrr")?.remove()
-  })
-
   it("creates keyframes", () => {
     const animationName = keyframes`
       from {

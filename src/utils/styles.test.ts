@@ -1,12 +1,8 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { Styles } from "./styles"
 
 describe("Test Styles", () => {
-  afterEach(() => {
-    document.getElementById("_goobrrr")?.remove()
-  })
-
   it("converts string to style object", () => {
     const styles = new Styles("color: rebeccapurple;")
     expect(styles.styles).toStrictEqual({ color: "rebeccapurple" })

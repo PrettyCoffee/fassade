@@ -1,12 +1,8 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { createGlobalStyles } from "./create-global-styles"
 
 describe("createGlobalStyles", () => {
-  afterEach(() => {
-    document.getElementById("_goobrrr")?.remove()
-  })
-
   it("injects template styles when the component is rendered", () => {
     const GlobalStyles = createGlobalStyles`
       body {

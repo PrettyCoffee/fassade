@@ -6,6 +6,10 @@ import { update } from "./update"
 /** In-memory cache. */
 const cache: Record<string, string> = {}
 
+/** Empty the hash cache. Should only be used in unit testing. */
+export const resetHashCache = () =>
+  Object.keys(cache).forEach(key => delete cache[key])
+
 /** Stringifies an object structure. */
 const stringify = (data: StyleNode | StyleNode[string] | undefined) => {
   if (typeof data == "object") {
