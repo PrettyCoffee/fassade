@@ -1,4 +1,4 @@
-import { Conditional, Template } from "../util-types"
+import { type Conditional, type Template } from "../util-types"
 import { parser, type StyleNode } from "./parser"
 import { Styles } from "./styles"
 

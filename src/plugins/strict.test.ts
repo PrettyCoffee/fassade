@@ -2,11 +2,11 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { strict } from "./strict"
 
-afterEach(() => {
-  vi.restoreAllMocks()
-})
-
 describe("strict plugin", () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it.each([
     [
       "empty rule key",

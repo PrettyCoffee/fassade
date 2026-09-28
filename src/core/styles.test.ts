@@ -2,11 +2,16 @@ import { afterEach, describe, expect, it } from "vitest"
 
 import { Styles } from "./styles"
 
-afterEach(() => {
-  document.getElementById("_goobrrr")?.remove()
-})
-
 describe("Test Styles", () => {
+  afterEach(() => {
+    document.getElementById("_goobrrr")?.remove()
+  })
+
+  it("converts string to style object", () => {
+    const styles = new Styles("color: rebeccapurple;")
+    expect(styles.styles).toStrictEqual({ color: "rebeccapurple" })
+  })
+
   it("injects styles lazily and caches the generated class", () => {
     const styles = new Styles({ color: "rebeccapurple" }, undefined)
 
@@ -16,7 +21,7 @@ describe("Test Styles", () => {
 
     expect(className).toBeTruthy()
     expect(styles.class).toBe(className)
-    expect(document.getElementById("_goobrrr")?.textContent?.trim()).toBe(
+    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
       `.${className}{color:rebeccapurple;}`,
     )
   })
@@ -49,7 +54,7 @@ describe("Test Styles", () => {
     expect(configured).not.toBe(styles)
     expect(configured.styles).toBe(styles.styles)
     expect(configured.class).toBeTruthy()
-    expect(document.getElementById("_goobrrr")?.textContent?.trim()).toBe(
+    expect(document.getElementById("_goobrrr")?.textContent.trim()).toBe(
       "body{margin:0;}",
     )
   })

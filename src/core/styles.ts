@@ -22,11 +22,14 @@ const merge = (a: StyleNode | StyleNode[string] | undefined, b: StyleNode) => {
 
 export class Styles {
   private _class: string | undefined
+  public readonly styles: StyleNode
 
   constructor(
-    public readonly styles: StyleNode,
+    styles: StyleNode | string,
     private readonly config?: StylesConfig,
-  ) {}
+  ) {
+    this.styles = typeof styles === "string" ? parser.toObject(styles) : styles
+  }
 
   /** Inject the styles into the dom and retrieve a css class. */
   public get class() {

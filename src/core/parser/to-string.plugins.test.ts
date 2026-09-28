@@ -4,14 +4,14 @@ import { minify } from "../../plugins/minify"
 import { type Plugin } from "../../plugins/plugin"
 import { strict } from "../../plugins/strict"
 import { setup } from "../../setup"
-import { toString } from "./toString"
-
-afterEach(() => {
-  vi.restoreAllMocks()
-  setup({ plugins: [minify()] })
-})
+import { toString } from "./to-string"
 
 describe("Test plugin integration", () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+    setup({ plugins: [minify()] })
+  })
+
   it("uses configured plugins to stringify keyframes", () => {
     setup({ plugins: [minify()] })
 
@@ -87,7 +87,7 @@ describe("Test plugin integration", () => {
     expect(
       toString({ from: { opacity: 0 } }, "@keyframes fade", "keyframes"),
     ).toBe("@keyframes fade{from{opacity:1;}}/*first*/")
-    expect(calls).toEqual([
+    expect(calls).toStrictEqual([
       "first:start",
       "second:start",
       "first:rule",

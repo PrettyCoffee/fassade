@@ -2,8 +2,8 @@ import {
   joinCssTemplate,
   isCssTemplate,
   type CssTemplate,
-} from "./core/cssTemplate"
-import { parser, type StyleNode } from "./core/parser"
+} from "./core/css-template"
+import { type StyleNode } from "./core/parser"
 import { Styles } from "./core/styles"
 
 /** Create styles, inject them into the DOM, and generate a css class. */
@@ -13,13 +13,14 @@ export function css(...args: [StyleNode] | CssTemplate["Args"]) {
   const [styles, ...values] = args
 
   if (isCssTemplate(styles)) {
-    return new Styles(parser.toObject(joinCssTemplate(styles, ...values)))
+    return new Styles(joinCssTemplate(styles, ...values))
   }
   return new Styles(styles)
 }
 
 /** Declare global styles. */
 export const glob = (...args: CssTemplate["Args"]) => {
+  // oxlint-disable-next-line no-unused-expressions -- .class injects the css in the dom
   css(...args).withConfig({ type: "global" }).class
 }
 

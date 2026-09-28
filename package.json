@@ -48,7 +48,8 @@
     "test": "vitest run",
     "test:coverage": "pnpm run test --coverage",
     "test:watch": "vitest watch",
-    "format": "oxfmt --write",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxlint --fix && oxfmt --write",
     "prepare": "husky"
   },
   "peerDependencies": {
@@ -64,12 +65,18 @@
     "husky": "9.1.7",
     "lint-staged": "17.5.0",
     "oxfmt": "0.67.0",
+    "oxlint": "1.85.0",
+    "oxlint-tsgolint": "7.0.2003",
     "tsdown": "0.23.0",
     "typescript": "7.0.2",
     "vitest": "5.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,html,md,json,yaml}": [
+    "*.{js,jsx,ts,tsx}": [
+      "oxlint --fix",
+      "oxfmt --write"
+    ],
+    "*.{html,md,json,yaml}": [
       "oxfmt --write"
     ]
   }

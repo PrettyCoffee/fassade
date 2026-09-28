@@ -6,7 +6,7 @@ import { Button } from "./components/button"
 import { ButtonList } from "./components/button-list"
 import { Divider } from "./components/divider"
 import { H1, H2, Code } from "./components/typography"
-import { useMediaQuery } from "./hooks/useMediaQuery"
+import { useMediaQuery } from "./hooks/use-media-query"
 
 const MainSection = styled.section`
   display: flex;
@@ -71,7 +71,7 @@ export const App = () => {
       <Stack>
         <SideSection>
           <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
+            <use href="/icons.svg#documentation-icon" />
           </svg>
           <H2>Ressources</H2>
           <p>Seeking more details?</p>
@@ -97,7 +97,7 @@ export const App = () => {
 
         <SideSection>
           <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
+            <use href="/icons.svg#social-icon" />
           </svg>
           <H2>Contribution</H2>
           <p>Help to improve the project</p>

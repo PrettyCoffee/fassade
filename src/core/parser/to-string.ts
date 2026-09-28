@@ -1,7 +1,8 @@
+// oxlint-disable no-use-before-define -- cannot be enforced for this file, since the functions are formatting recursively
 import type { Plugin } from "../../plugins/plugin"
 import { getSetup } from "../../setup"
-import { InjectionType } from "../hash"
-import { StyleNode } from "./types"
+import { type InjectionType } from "../hash"
+import { type StyleNode } from "./types"
 
 interface HookContext {
   injection?: InjectionType
@@ -14,6 +15,9 @@ type HookHandler<THookName extends keyof Plugin> = Exclude<
 type HookProps<THookName extends keyof Plugin> = Parameters<
   HookHandler<THookName>
 >[0]
+type HookResult<THookName extends keyof Plugin> = ReturnType<
+  HookHandler<THookName>
+>
 
 const runHook = <THookName extends keyof Plugin>(
   hook: THookName,
@@ -21,17 +25,18 @@ const runHook = <THookName extends keyof Plugin>(
   ctx: HookContext,
 ) => {
   const hooks = getSetup().plugins.map(
-    plugin => plugin[hook] as HookHandler<THookName>,
+    plugin => plugin[hook] as HookHandler<THookName> | undefined,
   )
   const out = hooks.reduce(
     (props, hook) => {
+      // oxlint-disable-next-line typescript/no-unsafe-argument -- type of args already ensures the correct type here
       props.result = hook?.(props as any) ?? props.result
       return props
     },
     { ...props, ...ctx },
   )
 
-  return out.result as any
+  return out.result as HookResult<THookName>
 }
 
 const isAst = (value: StyleNode | string): value is StyleNode =>
@@ -105,7 +110,7 @@ const matchers: Matcher[] = [
 ]
 
 const build = (obj: StyleNode, ctx: HookContext) => {
-  let hoisted: string[] = []
+  const hoisted: string[] = []
   let current = ""
   const blocks: string[] = []
 
@@ -149,12 +154,12 @@ export const toString = (
   node: StyleNode,
   selector?: string,
   type?: InjectionType,
-): string => {
+) => {
   const ctx: HookContext = { injection: type }
   const tree = runHook("start", { selector, node }, ctx) ?? node
   const { hoisted, content } = build(
     !selector ? tree : { [selector]: tree },
     ctx,
   )
-  return runHook("end", { result: `${hoisted.join("")}${content}` }, ctx)
+  return runHook("end", { result: `${hoisted.join("")}${content}` }, ctx) ?? ""
 }

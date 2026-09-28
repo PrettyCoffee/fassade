@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 
-import { getCssString, joinCssTemplate } from "./cssTemplate"
+import { getCssString, joinCssTemplate } from "./css-template"
 import { Styles } from "./styles"
 
 describe("Test compile", () => {

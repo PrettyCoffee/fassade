@@ -6,5 +6,5 @@
     "source.format.oxc": "always"
   },
   "oxc.enable.oxfmt": true,
-  "oxc.enable.oxlint": false
+  "oxc.enable.oxlint": true
 }

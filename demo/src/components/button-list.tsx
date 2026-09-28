@@ -1,4 +1,4 @@
-import { Children, PropsWithChildren } from "react"
+import { Children, type PropsWithChildren } from "react"
 
 import { styled } from "#lib/goobrrr"
 

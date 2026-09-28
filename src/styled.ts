@@ -1,6 +1,6 @@
 import { type JSX } from "react"
 
-import { type CssTemplate, isCssTemplate } from "./core/cssTemplate"
+import { type CssTemplate, isCssTemplate } from "./core/css-template"
 import { type StyleNode } from "./core/parser"
 import { Styles } from "./core/styles"
 import { css } from "./css"

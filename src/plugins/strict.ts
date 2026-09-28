@@ -9,7 +9,7 @@ const error = (ctx: unknown, message: string) => {
   console.error(`${message} \nContext:`, ctx)
   throw new Error("goobrrr strict mode reported an error")
 }
-const report = { warn, error, off: () => {} }
+const report = { warn, error, off: () => null }
 
 type Severity = "off" | "warn" | "error"
 interface Rules {

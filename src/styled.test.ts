@@ -32,7 +32,7 @@ describe("Test styled", () => {
   })
 
   it("allows the rendered element to be overridden with as", () => {
-    const CustomButton = (props: { type: string }) => null
+    const CustomButton = (props: { type: string }) => props.type
     const Button = styled.button({ color: "red" })
 
     Button({ as: CustomButton, type: "button" })

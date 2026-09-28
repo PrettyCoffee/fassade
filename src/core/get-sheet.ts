@@ -19,7 +19,7 @@ const getStyleElement = () => {
 export const getSheet = (): Sheet => {
   if (typeof window === "object") {
     const style = getStyleElement()
-    if (!style.parentNode) document.head.appendChild(style)
+    if (!style.parentNode) document.head.append(style)
     return style.firstChild as Element
   }
 

@@ -1,5 +1,5 @@
-import { Sheet } from "./get-sheet"
-import { parser, StyleNode } from "./parser"
+import { type Sheet } from "./get-sheet"
+import { parser, type StyleNode } from "./parser"
 import { toHash } from "./to-hash"
 import { update } from "./update"
 
@@ -13,7 +13,7 @@ const stringify = (data: StyleNode | StyleNode[string] | undefined) => {
     for (const p in data) out += p + stringify(data[p])
     return out
   } else {
-    return String(data) ?? ""
+    return String(data ?? "")
   }
 }
 
@@ -51,7 +51,7 @@ const createStyles = (
  * @param append Append or prepend.
  * @param type What kind of css needs to be injected.
  */
-export let hash = (
+export const hash = (
   compiled: StyleNode | string,
   sheet: Sheet,
   append?: boolean,

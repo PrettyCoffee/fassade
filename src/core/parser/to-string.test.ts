@@ -1,17 +1,9 @@
-import { describe, it, expect, afterEach } from "vitest"
+import { describe, it, expect } from "vitest"
 
-import { toString } from "./toString"
-import { StyleNode } from "./types"
+import { toString } from "./to-string"
+import { type StyleNode } from "./types"
 
-const parser = toString as typeof toString & {
-  p?: (key: string, value: unknown) => string
-}
-
-afterEach(() => {
-  parser.p = undefined
-})
-
-type TestCase = {
+interface TestCase {
   name: string
   input: StyleNode
   selector: string
@@ -68,13 +60,5 @@ const cases: TestCase[] = [
 describe("Test parse", () => {
   it.each(cases)("parses $name", ({ input, selector, css }) => {
     expect(toString(input, selector)).toBe(css)
-  })
-
-  it("passes declarations through the configured prefixer", () => {
-    parser.p = (key, value) => `${key}: ${value};\n`
-
-    expect(toString({ userSelect: "none" }, ".abc123")).toBe(
-      ".abc123{user-select:none;}",
-    )
   })
 })

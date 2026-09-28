@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest"
 
-import { toObject } from "./toObject"
+import { toObject } from "./to-object"
 
-type TestCase = {
+interface TestCase {
   name: string
   css: string
   ast: object
@@ -87,6 +87,8 @@ describe("Test toObject", () => {
     expect(toObject(css)).toStrictEqual(ast)
   })
 
+  // TODO: Improve css parsing to catch errors
+  // oxlint-disable-next-line vitest/no-disabled-tests
   it.skip("raises error for rules with bad syntax", () => {
     const css = `
       color;red;

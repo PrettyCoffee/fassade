@@ -46,7 +46,7 @@ const VBorder = styled(Border)`
 `
 
 interface DividerProps {
-  orientation: "horizontal" | "vertical"
+  orientation?: "horizontal" | "vertical"
 }
 export const Divider = ({ orientation = "horizontal" }: DividerProps) =>
   orientation === "vertical" ? <VBorder /> : <HBorder />
