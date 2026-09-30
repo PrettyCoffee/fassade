@@ -53,4 +53,17 @@ describe("Test recipe", () => {
       "color:red;font-weight:bold;",
     )
   })
+
+  it("returns a fresh result for each call", () => {
+    const createRecipe = recipe(({ active }: { active: boolean }) =>
+      active ? { color: "red" } : { color: "blue" },
+    )
+
+    const activeStyles = createRecipe({ active: true })
+    const inactiveStyles = createRecipe({ active: false })
+
+    expect(activeStyles).not.toBe(inactiveStyles)
+    expect(activeStyles.toString()).toBe("color:red;")
+    expect(inactiveStyles.toString()).toBe("color:blue;")
+  })
 })
