@@ -18,7 +18,7 @@ describe("Test Styles", () => {
 
     expect(className).toBeTruthy()
     expect(styles.class).toBe(className)
-    expect(getCsrSheet().data).toBe(`.${className}{color:rebeccapurple;}`)
+    expect(getCsrSheet()?.data).toBe(`.${className}{color:rebeccapurple;}`)
   })
 
   it("deeply merges appended styles", () => {
@@ -49,7 +49,7 @@ describe("Test Styles", () => {
     expect(configured).not.toBe(styles)
     expect(configured.styles).toBe(styles.styles)
     expect(configured.class).toBeTruthy()
-    expect(getCsrSheet().data).toBe("body{margin:0;}")
+    expect(getCsrSheet()?.data).toBe("body{margin:0;}")
   })
 
   it("converts styles to a CSS string without injecting them", () => {

@@ -1,17 +1,18 @@
-import { useCallback, useMemo, useSyncExternalStore } from "react"
+import { useEffect, useState } from "react"
+
+import { getWindow } from "../utils/get-window"
 
 export const useMediaQuery = (queryString: string) => {
-  const query = useMemo(() => window.matchMedia(queryString), [queryString])
+  const [matches, setMatches] = useState(false)
 
-  const getSnapshot = useCallback(() => query.matches, [query])
+  useEffect(() => {
+    const query = getWindow()?.matchMedia(queryString)
+    if (!query) return
+    const update = () => setMatches(query.matches)
+    update()
+    query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  }, [queryString])
 
-  const subscribe = useCallback(
-    (cb: () => void) => {
-      query.addEventListener("change", cb)
-      return () => query.removeEventListener("change", cb)
-    },
-    [query],
-  )
-
-  return useSyncExternalStore(subscribe, getSnapshot)
+  return matches
 }

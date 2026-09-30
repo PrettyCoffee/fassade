@@ -34,7 +34,7 @@ describe("Test css", () => {
     const className = styles.class
 
     expect(className).toBeTruthy()
-    expect(getCsrSheet().data).toBe(`.${className}{color:red;}`)
+    expect(getCsrSheet()?.data).toBe(`.${className}{color:red;}`)
   })
 })
 
@@ -47,7 +47,7 @@ describe("Test glob", () => {
       }
     `
 
-    expect(getCsrSheet().data).toBe("body{margin:0;}")
+    expect(getCsrSheet()?.data).toBe("body{margin:0;}")
   })
 
   it("creates multiple global font-faces", () => {
@@ -63,7 +63,7 @@ describe("Test glob", () => {
       }
     `
 
-    expect(getCsrSheet().data).toBe(
+    expect(getCsrSheet()?.data).toBe(
       '@font-face{font-family:"Noto Serif";font-style:normal;}@font-face{font-family:"Noto Serif";font-style:italic;}',
     )
   })
@@ -81,7 +81,7 @@ describe("Test keyframes", () => {
     `
 
     expect(animationName).toBeTruthy()
-    expect(getCsrSheet().data).toBe(
+    expect(getCsrSheet()?.data).toBe(
       `@keyframes ${animationName}{from{opacity:0;}to{opacity:1;}}`,
     )
   })

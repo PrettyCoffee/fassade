@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@pretty-cozy/oxlint-config':
-        specifier: 0.1.0
-        version: 0.1.0(oxfmt@0.67.0)(oxlint-tsgolint@7.0.2003)(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))(tailwindcss@4.3.3)(typescript@7.0.2)
+        specifier: 0.2.2
+        version: 0.2.2(oxfmt@0.67.0)(oxlint-tsgolint@7.0.2003)(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))(tailwindcss@4.3.3)(typescript@7.0.2)
       '@types/react':
         specifier: 19.2.18
         version: 19.2.18
@@ -404,8 +404,8 @@ packages:
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
-  '@pretty-cozy/oxlint-config@0.1.0':
-    resolution: {integrity: sha512-v/3Pf9aIGGkyNL1RklAE3qE6tszEbyPeSt2cwz39Fh+PClD00voCcqWR5lf/h2oKVfkx5QuPI8xuAsDRUFUKuw==}
+  '@pretty-cozy/oxlint-config@0.2.2':
+    resolution: {integrity: sha512-wOR064H4tQmlyGLYk/GDD6NWS8oh7Si48Qf7AGFvoMAzAypB7FCTNNC8VqVq288h2uWaymsmoNOMv9rB/KbLeg==}
     peerDependencies:
       oxfmt: ^0.58.0
       oxlint: ^1.74.0
@@ -1594,7 +1594,7 @@ snapshots:
 
   '@pkgr/core@0.3.6': {}
 
-  '@pretty-cozy/oxlint-config@0.1.0(oxfmt@0.67.0)(oxlint-tsgolint@7.0.2003)(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))(tailwindcss@4.3.3)(typescript@7.0.2)':
+  '@pretty-cozy/oxlint-config@0.2.2(oxfmt@0.67.0)(oxlint-tsgolint@7.0.2003)(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))(tailwindcss@4.3.3)(typescript@7.0.2)':
     dependencies:
       eslint-plugin-better-tailwindcss: 4.7.0(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))(tailwindcss@4.3.3)(typescript@7.0.2)
       oxfmt: 0.67.0

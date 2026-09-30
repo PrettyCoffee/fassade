@@ -6,7 +6,7 @@ import { getCsrSheet, getSsrSheet, GOOBRRR_ID } from "../utils/style-sheet"
 const resetCaches = () => {
   resetHashCache()
   getSsrSheet().data = " "
-  getCsrSheet().data = " "
+  getCsrSheet()!.data = " "
   document.getElementById(GOOBRRR_ID.CSR)?.remove()
   document.getElementById(GOOBRRR_ID.SSR)?.remove()
 }

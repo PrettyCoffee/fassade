@@ -3,6 +3,8 @@ preferFrozenLockfile: true
 savePrefix: ""
 
 minimumReleaseAge: 4320 # >=3 days
+minimumReleaseAgeExclude:
+  - "@pretty-cozy/oxlint-config@0.2.2"
 
 trustPolicy: no-downgrade
 

@@ -14,7 +14,7 @@ describe("Test Global", () => {
 
     expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
     expect(Global({ styles })).toBeNull()
-    expect(getCsrSheet().data).toBe("body{margin:0;}")
+    expect(getCsrSheet()?.data).toBe("body{margin:0;}")
   })
 
   it("accepts style objects", () => {
@@ -24,6 +24,6 @@ describe("Test Global", () => {
 
     Global({ styles })
 
-    expect(getCsrSheet().data).toBe("html{font-family:sans-serif;}")
+    expect(getCsrSheet()?.data).toBe("html{font-family:sans-serif;}")
   })
 })

@@ -56,7 +56,7 @@
     "@types/react": "^18 || ^19"
   },
   "devDependencies": {
-    "@pretty-cozy/oxlint-config": "0.1.0",
+    "@pretty-cozy/oxlint-config": "0.2.2",
     "@types/react": "19.2.18",
     "@vitest/coverage-v8": "5.0.0",
     "happy-dom": "20.14.0",

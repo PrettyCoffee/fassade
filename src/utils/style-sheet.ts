@@ -7,8 +7,10 @@ export const GOOBRRR_ID = {
 
 const ssrCache = { data: "" }
 
+const document = getWindow()?.document
+
 const getDomSheet = (id: string) =>
-  getWindow()?.document.querySelector(`#${id}`)?.firstChild as Text | null
+  document?.querySelector(`#${id}`)?.firstChild as Text | null
 
 /** Returns the text node or an object for ssr environments, to collect styles. */
 export const getSsrSheet = () => {
@@ -19,7 +21,7 @@ export const getSsrSheet = () => {
 
 export const getCsrSheet = () => {
   const existing = getDomSheet(GOOBRRR_ID.CSR)
-  if (existing) return existing
+  if (!document || existing) return existing
 
   const style = document.createElement("style")
   style.id = GOOBRRR_ID.CSR
@@ -30,11 +32,11 @@ export const getCsrSheet = () => {
 
 type StyleUpdate = (data: string, secondary?: string) => string
 export const updateSheet = (updater: StyleUpdate) => {
-  if (!getWindow()) {
-    ssrCache.data = updater(ssrCache.data).trim()
+  const ssr = getSsrSheet()
+  const csr = getCsrSheet()
+  if (!csr) {
+    ssr.data = updater(ssrCache.data).trim()
   } else {
-    const ssr = getSsrSheet()
-    const csr = getCsrSheet()
     csr.data = updater(csr.data, ssr.data).trim()
   }
 }
