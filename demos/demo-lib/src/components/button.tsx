@@ -44,3 +44,6 @@ export const Button = styled.button<ButtonProps>(({ look = "secondary" }) => [
         background: var(--social-bg);
       `,
 ])
+
+Button.styles({ look: "primary" }).inject()
+Button.styles({ look: "secondary" }).inject()

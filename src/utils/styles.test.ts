@@ -44,11 +44,11 @@ describe("Test Styles", () => {
 
   it("creates a new instance with overridden configuration", () => {
     const styles = new Styles({ body: { margin: 0 } })
-    const configured = styles.withConfig({ type: "global", append: true })
+    const global = styles.withConfig({ type: "global", append: true })
 
-    expect(configured).not.toBe(styles)
-    expect(configured.styles).toBe(styles.styles)
-    expect(configured.class).toBeTruthy()
+    expect(global).not.toBe(styles)
+    expect(global.styles).toBe(styles.styles)
+    global.inject()
     expect(getCsrSheet()?.data).toBe("body{margin:0;}")
   })
 

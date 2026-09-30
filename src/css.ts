@@ -20,8 +20,9 @@ export function css(...args: [StyleNode] | CssTemplate["Args"]) {
 
 /** Declare global styles. */
 export const glob = (...args: CssTemplate["Args"]) => {
-  // oxlint-disable-next-line no-unused-expressions -- .class injects the css in the dom
-  css(...args).withConfig({ type: "global" }).class
+  css(...args)
+    .withConfig({ type: "global" })
+    .inject()
 }
 
 /** Keyframes function for defining animations. */

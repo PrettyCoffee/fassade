@@ -7,8 +7,8 @@ export type RecipeFactory<TProps extends object> = (
 ) => Conditional<Styles | StyleNode> | Conditional<Styles | StyleNode>[]
 
 export function recipe<TProps extends object>(create: RecipeFactory<TProps>) {
+  const result = new Styles({})
   return (props: TProps): Styles => {
-    const result = new Styles({})
     for (const style of [create(props)].flat()) {
       if (!style) continue
       result.append(style instanceof Styles ? style.styles : style)
