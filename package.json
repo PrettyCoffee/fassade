@@ -53,14 +53,12 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "@types/react": "^18 || ^19",
-    "csstype": "^3.0.10"
+    "@types/react": "^18 || ^19"
   },
   "devDependencies": {
     "@pretty-cozy/oxlint-config": "0.1.0",
     "@types/react": "19.2.18",
     "@vitest/coverage-v8": "5.0.0",
-    "csstype": "3.2.3",
     "happy-dom": "20.14.0",
     "husky": "9.1.7",
     "lint-staged": "17.5.0",
