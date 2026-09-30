@@ -1,0 +1,25 @@
+{
+  "name": "demo-react-waku",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "waku dev",
+    "build": "tsc -b && waku build",
+    "preview": "pnpm build && waku start"
+  },
+  "dependencies": {
+    "demo-lib": "workspace:*",
+    "goobrrr": "workspace:*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "react-server-dom-webpack": "19.3.0",
+    "vite": "8.3.1",
+    "waku": "1.0.0-rc.1"
+  }
+}
