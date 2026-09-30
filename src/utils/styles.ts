@@ -1,21 +1,10 @@
 import { hash, type InjectionType } from "./hash"
+import { merge } from "./merge"
 import { parser, type StyleNode } from "./parser"
 
 interface StylesConfig {
   type?: InjectionType
   append?: boolean
-}
-
-const merge = (
-  a: StyleNode | StyleNode[string] | undefined,
-  b: StyleNode,
-): StyleNode => {
-  if (typeof a !== "object") return structuredClone(b)
-
-  return Object.entries(b).reduce<StyleNode>((merged, [key, value]) => {
-    merged[key] = typeof value === "object" ? merge(merged[key], value) : value
-    return merged
-  }, structuredClone(a))
 }
 
 export class Styles {
