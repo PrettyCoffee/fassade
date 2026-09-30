@@ -1,15 +1,7 @@
-import { css, styled } from "../goobrrr"
+import { css, styled, variants } from "../goobrrr"
 
-interface ButtonProps {
-  look?: "primary" | "secondary"
-  as?: "button" | "a"
-  onClick?: () => void
-  href?: string
-  target?: "_self" | "_blank"
-}
-
-export const Button = styled.button<ButtonProps>(({ look = "secondary" }) => [
-  css`
+const button = variants({
+  base: css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -34,16 +26,33 @@ export const Button = styled.button<ButtonProps>(({ look = "secondary" }) => [
       box-shadow: var(--shadow);
     }
   `,
-  look === "primary"
-    ? css`
+  variants: {
+    look: {
+      primary: css`
         color: var(--accent);
         background: var(--accent-bg);
-      `
-    : css`
+      `,
+      secondary: css`
         color: var(--text-head);
         background: var(--social-bg);
       `,
-])
+    },
+  },
+  defaultVariants: {
+    look: "secondary",
+  },
+})
 
-Button.styles({ look: "primary" }).inject()
-Button.styles({ look: "secondary" }).inject()
+// Intsantly inject the styles to prevent flickering
+button({ look: "primary" }).inject()
+button({ look: "secondary" }).inject()
+
+interface ButtonProps {
+  look?: "primary" | "secondary"
+  as?: "button" | "a"
+  onClick?: () => void
+  href?: string
+  target?: "_self" | "_blank"
+}
+
+export const Button = styled.button<ButtonProps>(button)
