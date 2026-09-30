@@ -42,6 +42,44 @@ describe("Test Styles", () => {
     )
   })
 
+  it("doesn't mutate inputs", () => {
+    const a = {
+      opacity: 1,
+      "&:hover": { color: "blue" },
+    }
+    const b = { opacity: 0, "&:hover": { opacity: 0 } }
+    const styles = new Styles(a)
+    const appended = styles.append(b)
+
+    expect(appended.styles).toStrictEqual({
+      opacity: 0,
+      "&:hover": { opacity: 0, color: "blue" },
+    })
+    expect(a).toStrictEqual({
+      opacity: 1,
+      "&:hover": { color: "blue" },
+    })
+    expect(b).toStrictEqual({
+      opacity: 0,
+      "&:hover": { opacity: 0 },
+    })
+  })
+
+  it("preserves zero values when merging", () => {
+    const a = {
+      opacity: 1,
+      "&:hover": { opacity: 0.8, color: "blue" },
+    }
+    const b = { opacity: 0, "&:hover": { opacity: 0 } }
+    const styles = new Styles(a)
+    const merged = styles.append(b)
+
+    expect(merged.styles).toStrictEqual({
+      opacity: 0,
+      "&:hover": { opacity: 0, color: "blue" },
+    })
+  })
+
   it("creates a new instance with overridden configuration", () => {
     const styles = new Styles({ body: { margin: 0 } })
     const global = styles.withConfig({ type: "global", append: true })

@@ -6,17 +6,16 @@ interface StylesConfig {
   append?: boolean
 }
 
-const merge = (a: StyleNode | StyleNode[string] | undefined, b: StyleNode) => {
-  if (typeof a !== "object") return b
+const merge = (
+  a: StyleNode | StyleNode[string] | undefined,
+  b: StyleNode,
+): StyleNode => {
+  if (typeof a !== "object") return structuredClone(b)
 
-  return Object.entries(b).reduce((merged, [key, value]) => {
-    if (typeof value === "object") {
-      merged[key] = merge(merged[key], value)
-    } else if (value) {
-      merged[key] = value
-    }
+  return Object.entries(b).reduce<StyleNode>((merged, [key, value]) => {
+    merged[key] = typeof value === "object" ? merge(merged[key], value) : value
     return merged
-  }, a)
+  }, structuredClone(a))
 }
 
 export class Styles {
