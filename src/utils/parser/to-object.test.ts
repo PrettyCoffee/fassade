@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest"
+import { afterEach, beforeEach, describe, it, expect, vi } from "vitest"
 
 import { toObject } from "./to-object"
 
@@ -8,9 +8,19 @@ interface TestCase {
   ast: object
 }
 
-const cases: TestCase[] = [
+const validCases: TestCase[] = [
   { name: "empty input", css: "", ast: {} },
   { name: "single declaration", css: "color: red;", ast: { color: "red" } },
+  {
+    name: "value also appears in property name",
+    css: "flex-wrap: wrap;",
+    ast: { "flex-wrap": "wrap" },
+  },
+  {
+    name: "declaration without a trailing semicolon",
+    css: "color: red",
+    ast: { color: "red" },
+  },
   {
     name: "multiple declarations",
     css: "color:red;background:blue;",
@@ -88,21 +98,62 @@ const cases: TestCase[] = [
   },
 ]
 
+const invalidCases: (TestCase & { msg: string })[] = [
+  {
+    name: "declaration without a colon",
+    css: "background blue;",
+    ast: {},
+    msg: "Unexpected CSS syntax",
+  },
+  {
+    name: "malformed declaration text",
+    css: "color;red;",
+    ast: {},
+    msg: "Unexpected CSS syntax",
+  },
+  {
+    name: "unexpected text before a declaration",
+    css: ".button [ color: blue;",
+    ast: { color: "blue" },
+    msg: "Unexpected CSS syntax",
+  },
+  {
+    name: "unexpected closing brace",
+    css: "}",
+    ast: {},
+    msg: "Unexpected closing brace",
+  },
+  {
+    name: "unclosed block",
+    css: ".button { color: blue;",
+    ast: { ".button": { color: "blue" } },
+    msg: "Unclosed block",
+  },
+  {
+    name: "unterminated comment",
+    css: "/* comment",
+    ast: {},
+    msg: "Unexpected CSS syntax",
+  },
+]
+
+const warning = vi.fn()
+
 describe("Test toObject", () => {
-  it.each(cases)("parses $name", ({ css, ast }) => {
-    expect(toObject(css)).toStrictEqual(ast)
+  beforeEach(() => {
+    warning.mockClear()
+    vi.spyOn(console, "warn").mockImplementation(warning)
   })
 
-  // TODO: Improve css parsing to catch errors
-  // oxlint-disable-next-line vitest/no-disabled-tests
-  it.skip("raises error for rules with bad syntax", () => {
-    const css = `
-      color;red;
-      background blue;
-      .button [
-        color: blue;
-      ]
-    `
-    expect(toObject(css)).toStrictEqual({})
+  afterEach(() => vi.restoreAllMocks())
+
+  it.each(validCases)("parses $name", ({ css, ast }) => {
+    expect(toObject(css)).toStrictEqual(ast)
+    expect(warning).not.toHaveBeenCalled()
+  })
+
+  it.each(invalidCases)("warns on $name", ({ css, ast, msg }) => {
+    expect(toObject(css)).toStrictEqual(ast)
+    expect(warning).toHaveBeenCalledWith(expect.stringContaining(msg))
   })
 })
