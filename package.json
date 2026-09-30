@@ -41,7 +41,7 @@
     }
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsc -b && tsdown",
     "dev": "pnpm run dev:lib & cd demos/vite && pnpm run dev",
     "dev:waku": "pnpm run dev:lib & cd demos/waku && pnpm run dev",
     "dev:lib": "pnpm run build --watch",
