@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
+import { setup, type Theme } from "./setup"
 import { Styles } from "./utils/styles"
 import { variants, type VariantProps } from "./variants"
 
@@ -154,5 +155,14 @@ describe("Test variants", () => {
 
     expect(check).toBeTruthy()
     expect(buttonStyles(props)).toBeInstanceOf(Styles)
+  })
+
+  it("provides a theme to variants", () => {
+    const theme = { color: "blue" } as Theme
+    setup({ theme })
+    const mock = vi.fn().mockReturnValue({ variants: {} })
+    variants(mock)({})
+
+    expect(mock).toHaveBeenCalledWith(theme)
   })
 })

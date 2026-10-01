@@ -1,5 +1,6 @@
 import { afterEach } from "vitest"
 
+import { setup, type Theme } from "../setup"
 import { resetStyleCache } from "../utils/hash"
 import { getCsrSheet, getSsrSheet, GOOBRRR_ID } from "../utils/style-sheet"
 
@@ -14,4 +15,5 @@ const resetCaches = () => {
 // oxlint-disable-next-line vitest/require-top-level-describe -- this is a global afterEach
 afterEach(() => {
   resetCaches()
+  setup({ theme: null as Theme })
 })

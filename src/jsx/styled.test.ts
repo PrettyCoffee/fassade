@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { setup } from "../setup"
+import { setup, type Theme } from "../setup"
 import { styled } from "./styled"
 
 describe("Test styled", () => {
@@ -73,6 +73,15 @@ describe("Test styled", () => {
       "input",
       expect.objectContaining({ id: "email" }),
     )
+  })
+
+  it("provides a theme to styled components", () => {
+    const theme = { color: "blue" } as Theme
+    setup({ theme })
+    const mock = vi.fn()
+    styled.button(mock)({})
+
+    expect(mock).toHaveBeenCalledWith({}, theme)
   })
 
   it("exposes a display name and the styles used by the component", () => {

@@ -1,3 +1,4 @@
+import { getTheme, type Theme } from "./setup"
 import { merge } from "./utils/merge"
 import type { StyleNode } from "./utils/parser"
 import { Styles } from "./utils/styles"
@@ -105,8 +106,15 @@ const getProps = (
  * compound styles.
  */
 export function variants<TVariants extends VariantDefinitions>(
-  config: VariantsConfig<TVariants>,
+  variantConfig:
+    | VariantsConfig<TVariants>
+    | ((theme: Theme) => VariantsConfig<TVariants>),
 ) {
+  const config =
+    typeof variantConfig === "function"
+      ? variantConfig(getTheme())
+      : variantConfig
+
   const defaultProps = config.defaultVariants ?? {}
 
   const baseStyles = normalizeStyles(config.base)

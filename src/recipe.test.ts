@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest"
 
 import { css } from "./css"
 import { recipe } from "./recipe"
+import { setup, type Theme } from "./setup"
 import { Styles } from "./utils/styles"
 
 describe("Test recipe", () => {
@@ -11,7 +12,7 @@ describe("Test recipe", () => {
     const props = { tone: "tomato" }
     const styles = createRecipe(props)
 
-    expect(create).toHaveBeenCalledWith(props)
+    expect(create).toHaveBeenCalledWith(props, null)
     expect(styles).toBeInstanceOf(Styles)
     expect(styles.toString()).toBe("color:tomato;")
   })
@@ -65,5 +66,14 @@ describe("Test recipe", () => {
     expect(activeStyles).not.toBe(inactiveStyles)
     expect(activeStyles.toString()).toBe("color:red;")
     expect(inactiveStyles.toString()).toBe("color:blue;")
+  })
+
+  it("provides a theme to recipe", () => {
+    const theme = { color: "blue" } as Theme
+    setup({ theme })
+    const mock = vi.fn()
+    recipe(mock)({})
+
+    expect(mock).toHaveBeenCalledWith({}, theme)
   })
 })

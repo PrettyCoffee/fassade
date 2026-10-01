@@ -2,7 +2,11 @@ import type { JSX } from "react"
 
 import { minify, type Plugin } from "./plugins"
 
-interface SetupConfig {
+// oxlint-disable-next-line typescript/no-empty-interface -- can be extended by users
+export interface SetupConfig {}
+
+interface Setup {
+  theme: Readonly<Theme>
   /**
    * JSX function to create a virtual dom node. (i.e. React.createElement or
    * Preact.h)
@@ -11,7 +15,8 @@ interface SetupConfig {
   /** List of goobrrr plugins. */
   plugins: Plugin[]
 }
-const setupStore: SetupConfig = {
+const setupStore: Setup = {
+  theme: null as never,
   plugins: [minify()],
   jsx: () => {
     throw new Error(
@@ -21,9 +26,14 @@ const setupStore: SetupConfig = {
 }
 
 /** Configure the behavior of goobrrr. */
-export const setup = ({ jsx, plugins }: Partial<SetupConfig>) => {
+export const setup = ({ theme, jsx, plugins }: Partial<Setup>) => {
+  // oxlint-disable-next-line typescript/no-unnecessary-condition -- Theme type can be changed by user
+  if (theme) setupStore.theme = theme
   if (jsx) setupStore.jsx = jsx
   if (plugins) setupStore.plugins = plugins
 }
 
 export const getSetup = () => setupStore
+
+export type Theme = SetupConfig extends { theme: infer Theme } ? Theme : never
+export const getTheme = () => getSetup().theme
