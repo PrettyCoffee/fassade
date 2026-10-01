@@ -27,7 +27,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["demos/vite/**"],
+      files: ["demos/vite/**", "demos/preact/**"],
       rules: {
         "eslint/no-restricted-globals": "off", // code won't run in RSC context
       },
