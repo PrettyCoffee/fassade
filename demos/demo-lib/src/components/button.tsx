@@ -1,6 +1,6 @@
 import { css, styled, variants } from "../goobrrr"
 
-const button = variants({
+const button = variants(t => ({
   base: css`
     display: inline-flex;
     align-items: center;
@@ -23,27 +23,21 @@ const button = variants({
     &:hover,
     &:focus-visible {
       border-color: color-mix(in srgb, currentColor 50%, transparent);
-      box-shadow: var(--shadow);
+      box-shadow: ${t.shadow};
     }
   `,
   variants: {
     look: {
-      primary: css`
-        color: var(--accent);
-        background: var(--accent-bg);
-      `,
-      secondary: css`
-        color: var(--text-head);
-        background: var(--social-bg);
-      `,
+      primary: { color: t.text.accent, background: t.bg.accent },
+      secondary: { color: t.text.default, background: t.bg.alt },
     },
   },
   defaultVariants: {
     look: "secondary",
   },
-})
+}))
 
-// Intsantly inject the styles to prevent flickering
+// Instantly inject the styles to prevent flickering
 button({ look: "primary" }).inject()
 button({ look: "secondary" }).inject()
 

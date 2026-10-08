@@ -1,5 +1,6 @@
 export * from "./button"
 export * from "./button-list"
 export * from "./divider"
+export * from "./global-styles"
 export * from "./icon"
 export * from "./typography"

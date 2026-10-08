@@ -8,7 +8,7 @@ import {
   Icon,
 } from "demo-lib/components"
 
-import { styled } from "../goobrrr"
+import { css, styled } from "../goobrrr"
 import { Counter } from "./counter"
 import { ListDivider } from "./list-divider"
 
@@ -26,22 +26,24 @@ const MainSection = styled.section`
   }
 `
 
-const SideSection = styled.section`
-  flex: 1;
-  padding: 32px;
-  text-align: left;
+const SideSection = styled.section(
+  (_props, t) => css`
+    flex: 1;
+    padding: 32px;
+    text-align: left;
 
-  @media (max-width: 1024px) {
-    padding: 24px 20px;
-  }
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
 
-  svg {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-    color: var(--accent);
-  }
-`
+    svg {
+      margin-bottom: 16px;
+      width: 22px;
+      height: 22px;
+      color: ${t.text.accent};
+    }
+  `,
+)
 
 const Stack = styled.div`
   display: flex;

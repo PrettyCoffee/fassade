@@ -1,49 +1,55 @@
-import { styled } from "../goobrrr"
+import { css, styled } from "../goobrrr"
 
-const Border = styled.span`
-  position: relative;
-  display: block;
-  background: var(--border);
+const Border = styled.span(
+  (_props, t) => css`
+    position: relative;
+    display: block;
+    background: ${t.stroke};
 
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    border: 5px solid transparent;
-  }
-`
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      border: 5px solid transparent;
+    }
+  `,
+)
 
-const HBorder = styled(Border)`
-  min-width: 100%;
-  height: 1px;
+const HBorder = styled(Border)(
+  (_props, t) => css`
+    min-width: 100%;
+    height: 1px;
 
-  &::before {
-    top: -4.25px;
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    top: -4.25px;
-    right: 0;
-    border-right-color: var(--border);
-  }
-`
+    &::before {
+      top: -4.25px;
+      left: 0;
+      border-left-color: ${t.stroke};
+    }
+    &::after {
+      top: -4.25px;
+      right: 0;
+      border-right-color: ${t.stroke};
+    }
+  `,
+)
 
-const VBorder = styled(Border)`
-  min-height: 100%;
-  width: 1px;
+const VBorder = styled(Border)(
+  (_props, t) => css`
+    min-height: 100%;
+    width: 1px;
 
-  &::before {
-    left: -4.25px;
-    top: 0;
-    border-top-color: var(--border);
-  }
-  &::after {
-    left: -4.25px;
-    bottom: 0;
-    border-bottom-color: var(--border);
-  }
-`
+    &::before {
+      left: -4.25px;
+      top: 0;
+      border-top-color: ${t.stroke};
+    }
+    &::after {
+      left: -4.25px;
+      bottom: 0;
+      border-bottom-color: ${t.stroke};
+    }
+  `,
+)
 
 interface DividerProps {
   orientation?: "horizontal" | "vertical"
