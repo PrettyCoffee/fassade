@@ -27,4 +27,6 @@ export const glob = (...args: CssTemplate["Args"]) => {
 
 /** Keyframes function for defining animations. */
 export const keyframes = (...args: CssTemplate["Args"]) =>
-  css(...args).withConfig({ type: "keyframes" }).class
+  css(...args)
+    .withConfig({ type: "keyframes" })
+    .inject()

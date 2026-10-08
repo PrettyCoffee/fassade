@@ -31,7 +31,7 @@ describe("Test css", () => {
 
     expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
 
-    const className = styles.class
+    const className = styles.inject()
 
     expect(className).toBeTruthy()
     expect(getCsrSheet()?.data).toBe(`.${className}{color:red;}`)

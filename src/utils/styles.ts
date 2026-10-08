@@ -1,4 +1,4 @@
-import { hash, type InjectionType } from "./hash"
+import { createClassName, hash, type InjectionType } from "./hash"
 import { merge } from "./merge"
 import { parser, type StyleNode } from "./parser"
 
@@ -8,6 +8,7 @@ interface StylesConfig {
 }
 
 export class Styles {
+  private _injected = false
   private _class: string | undefined
   public readonly styles: StyleNode
 
@@ -18,17 +19,19 @@ export class Styles {
     this.styles = typeof styles === "string" ? parser.toObject(styles) : styles
   }
 
-  /** Inject the styles into the dom. */
+  /** Inject the styles into the dom and get the related css class. */
   public inject() {
-    if (this._class) return
-    const { append, type } = this.config ?? {}
-    this._class = hash(this.styles, append, type)
+    if (!this._injected) {
+      const { append, type } = this.config ?? {}
+      this._class = hash(this.styles, append, type)
+      this._injected = true
+    }
+    return this.class
   }
 
   /** Retrieve a css class for the styles. */
   public get class() {
-    if (!this._class) this.inject()
-    return this._class ?? ""
+    return (this._class ??= createClassName(this.styles))
   }
 
   /** Append with new styles, merging them deeply. */

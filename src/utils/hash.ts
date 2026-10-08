@@ -19,7 +19,7 @@ const getIdentifier = (
   return out
 }
 
-const createClassName = (compiled: StyleNode | string) =>
+export const createClassName = (compiled: StyleNode | string) =>
   toHash(getIdentifier(compiled))
 
 export type InjectionType = "class" | "global" | "keyframes"

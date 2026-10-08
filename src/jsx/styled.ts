@@ -83,9 +83,9 @@ const createComponent = (
     const prev = (props as { className?: string | undefined }).className
     const append = !!prev && / *go\d+/.test(prev)
 
-    const className = (
-      styles instanceof Styles ? styles : styles(props)
-    ).withConfig({ append }).class
+    const className = (styles instanceof Styles ? styles : styles(props))
+      .withConfig({ append })
+      .inject()
 
     const fwdProps = { ...props }
     filterProps.forEach(key => delete fwdProps[key])

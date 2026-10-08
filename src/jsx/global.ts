@@ -6,7 +6,6 @@ interface GlobalProps {
 
 /** Injects the provided styles as global css. */
 export const Global = ({ styles }: GlobalProps) => {
-  // oxlint-disable-next-line no-unused-expressions
-  styles.withConfig({ type: "global" }).class
+  styles.withConfig({ type: "global" }).inject()
   return null
 }

@@ -14,11 +14,23 @@ describe("Test Styles", () => {
 
     expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
 
-    const className = styles.class
+    const className = styles.inject()
 
     expect(className).toBeTruthy()
     expect(styles.class).toBe(className)
     expect(getCsrSheet()?.data).toBe(`.${className}{color:rebeccapurple;}`)
+  })
+
+  it("generates a class without injecting styles", () => {
+    const styles = new Styles({ color: "purple" })
+
+    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+
+    const className = styles.class
+    expect(className).toBeTruthy()
+    expect(styles.class).toBe(className)
+
+    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
   })
 
   it("deeply merges appended styles", () => {
