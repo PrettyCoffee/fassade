@@ -1,28 +1,24 @@
 import { css } from "../goobrrr"
+import { theme } from "../theme"
 
 export const globalStyles = css`
   :root {
-    --text-gentle: #6b6375;
-    --text-default: #08060d;
-    --bg-default: #fff;
-    --stroke: #e5e4e7;
-    --bg-code: #f4f3ec;
-    --text-accent: #aa3bff;
-    --bg-accent: rgba(170, 59, 255, 0.1);
-    --text-accent-border: rgba(170, 59, 255, 0.5);
-    --bg-alt: rgba(244, 243, 236, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    ${theme.getVarsCss("light")}
+    @media (prefers-color-scheme: dark) {
+      ${theme.getVarsCss("dark")}
+    }
+  }
+  .light {
+    ${theme.getVarsCss("light")}
+  }
+  .dark {
+    ${theme.getVarsCss("dark")}
+  }
 
-    --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
-    --font-head: system-ui, "Segoe UI", Roboto, sans-serif;
-    --font-mono: ui-monospace, Consolas, monospace;
-
-    font: 18px/145% var(--font-sans);
+  :root {
+    font: 18px/145% ${theme("font.sans")};
     letter-spacing: 0.18px;
     color-scheme: light dark;
-    color: var(--text-gentle);
-    background: var(--bg-default);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -30,22 +26,6 @@ export const globalStyles = css`
 
     @media (max-width: 1024px) {
       font-size: 16px;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --text-gentle: #9ca3af;
-      --text-default: #f3f4f6;
-      --bg-default: #16171d;
-      --stroke: #2e303a;
-      --bg-code: #1f2028;
-      --text-accent: #c084fc;
-      --bg-accent: rgba(192, 132, 252, 0.15);
-      --text-accent-border: rgba(192, 132, 252, 0.5);
-      --bg-alt: rgba(47, 48, 58, 0.5);
-      --shadow:
-        rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
     }
   }
 
@@ -58,7 +38,7 @@ export const globalStyles = css`
     max-width: 100%;
     margin: 0 auto;
     text-align: center;
-    border-inline: 1px solid var(--stroke);
+    border-inline: 1px solid ${theme("stroke")};
     min-height: 100svh;
     display: flex;
     flex-direction: column;
@@ -66,6 +46,8 @@ export const globalStyles = css`
 
   body {
     margin: 0;
+    color: ${theme("text.gentle")};
+    background: ${theme("bg.default")};
   }
 
   p {

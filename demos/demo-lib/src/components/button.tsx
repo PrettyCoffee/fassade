@@ -23,13 +23,13 @@ const button = variants(t => ({
     &:hover,
     &:focus-visible {
       border-color: color-mix(in srgb, currentColor 50%, transparent);
-      box-shadow: ${t.shadow};
+      box-shadow: ${t("shadow")};
     }
   `,
   variants: {
     look: {
-      primary: { color: t.text.accent, background: t.bg.accent },
-      secondary: { color: t.text.default, background: t.bg.alt },
+      primary: { color: t("text.accent"), background: t("bg.accent") },
+      secondary: { color: t("text.default"), background: t("bg.alt") },
     },
   },
   defaultVariants: {

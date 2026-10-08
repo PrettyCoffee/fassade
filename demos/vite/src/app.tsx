@@ -41,7 +41,7 @@ const SideSection = styled.section(
       margin-bottom: 16px;
       width: 22px;
       height: 22px;
-      color: ${t.text.accent};
+      color: ${t("text.accent")};
     }
   `,
 )

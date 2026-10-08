@@ -1,9 +1,9 @@
 import { css, styled, type Theme } from "../goobrrr"
 
 const heading = (t: Theme) => css`
-  font-family: ${t.font.head};
+  font-family: ${t("font.head")};
   font-weight: 500;
-  color: ${t.text.default};
+  color: ${t("text.default")};
 `
 
 export const H1 = styled.h1(
@@ -34,13 +34,13 @@ export const H2 = styled.h1(
 
 export const Code = styled.code(
   (_props, t) => css`
-    font-family: ${t.font.mono};
+    font-family: ${t("font.mono")};
     display: inline-flex;
     border-radius: 4px;
-    color: ${t.text.default};
+    color: ${t("text.default")};
     font-size: 15px;
     line-height: 135%;
     padding: 4px 8px;
-    background: ${t.bg.code};
+    background: ${t("bg.code")};
   `,
 )

@@ -4,7 +4,7 @@ const Border = styled.span(
   (_props, t) => css`
     position: relative;
     display: block;
-    background: ${t.stroke};
+    background: ${t("stroke")};
 
     &::before,
     &::after {
@@ -23,12 +23,12 @@ const HBorder = styled(Border)(
     &::before {
       top: -4.25px;
       left: 0;
-      border-left-color: ${t.stroke};
+      border-left-color: ${t("stroke")};
     }
     &::after {
       top: -4.25px;
       right: 0;
-      border-right-color: ${t.stroke};
+      border-right-color: ${t("stroke")};
     }
   `,
 )
@@ -41,12 +41,12 @@ const VBorder = styled(Border)(
     &::before {
       left: -4.25px;
       top: 0;
-      border-top-color: ${t.stroke};
+      border-top-color: ${t("stroke")};
     }
     &::after {
       left: -4.25px;
       bottom: 0;
-      border-bottom-color: ${t.stroke};
+      border-bottom-color: ${t("stroke")};
     }
   `,
 )
