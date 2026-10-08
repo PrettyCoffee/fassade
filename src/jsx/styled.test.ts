@@ -88,6 +88,31 @@ describe("Test styled", () => {
     const Button = styled.button({ color: "red" })
 
     expect(Button.displayName).toBe("styled(button)")
-    expect(Button.styles.toString()).toBe("color:red;")
+    expect(Button.styles({}).toString()).toBe("color:red;")
+  })
+
+  it("extends styles of ancestor", () => {
+    const First = styled.button<{ kind: "primary" | "secondary" }>(
+      ({ kind }) => ({
+        color: kind === "primary" ? "red" : "gray",
+        fontSize: "8px",
+        border: "1px solid black",
+      }),
+    )
+    First.displayName = "First"
+    const Second = styled(First)<{ borderColor: string }>(
+      ({ borderColor }) => ({
+        fontSize: "10px",
+        border: `1px solid ${borderColor}`,
+      }),
+    )
+
+    expect(Second.displayName).toBe("styled(First)")
+    expect(
+      Second.styles({ kind: "primary", borderColor: "purple" }).toString(),
+    ).toBe("color:red;font-size:10px;border:1px solid purple;")
+    expect(
+      Second.styles({ kind: "secondary", borderColor: "rose" }).toString(),
+    ).toBe("color:gray;font-size:10px;border:1px solid rose;")
   })
 })

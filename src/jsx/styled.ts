@@ -4,6 +4,7 @@ import { css } from "../css"
 import { recipe, type RecipeFactory } from "../recipe"
 import { getSetup } from "../setup"
 import { type CssTemplate, isCssTemplate } from "../utils/css-template"
+import { merge } from "../utils/merge"
 import { type StyleNode } from "../utils/parser"
 import { Styles } from "../utils/styles"
 import { type Resolve } from "../utils/util-types"
@@ -15,7 +16,10 @@ interface FC<TProps = {}> {
 }
 
 type ElementName = keyof JSX.IntrinsicElements
-type ElementType = ElementName | FC<any> | SFC<any, any, any>
+type ElementType = ElementName | FC<any> | SFC<any, any>
+
+type StylePropsOf<T extends ElementType> =
+  T extends SFCMeta<any, infer TProps> ? TProps : {}
 
 type PropsOf<T extends ElementType> =
   T extends SFCMeta<infer TTypeProps, infer TProps>
@@ -36,22 +40,23 @@ type StyledProps<
 > = Resolve<{ as?: TType } & TProps & Omit<PropsOf<TType>, "as">>
 
 interface SFCMeta<TTypeProps extends object, TStyledProps extends object> {
-  /** @deprecated Internal prop for type preservation, don't use this in your app */
-  z__defaultTypeProps?: TTypeProps
-  /** @deprecated Internal prop for type preservation, don't use this in your app */
-  z__styledProps?: TStyledProps
+  /** @internal Internal flag to identify styled function components */
+  _isSfc: true
+  /** @internal Internal prop for type preservation, don't use this in your app */
+  _defaultTypeProps?: TTypeProps
+  /** @internal Internal prop for type preservation, don't use this in your app */
+  _styledProps?: TStyledProps
 }
 
 type SFCResult<T extends ElementType> = T extends string
   ? VNode
-  : T extends FC | SFC<any, any, any>
+  : T extends FC | SFC<any, any>
     ? ReturnType<T>
     : never
 
 interface SFC<
   TDefaultType extends ElementType,
   TProps extends object,
-  TStyles extends Styles | ((props: TProps) => Styles),
 > extends SFCMeta<PropsOf<TDefaultType>, TProps> {
   <TType extends ElementType = TDefaultType>(
     this: StyledContext<TProps> | void,
@@ -59,45 +64,85 @@ interface SFC<
   ): SFCResult<TDefaultType>
 
   displayName: string | undefined
-  filterProps: (filter: (keyof TProps)[]) => SFC<TDefaultType, TProps, TStyles>
-  styles: TStyles
+  filterProps: (filter: (keyof TProps)[]) => SFC<TDefaultType, TProps>
+  styles: (props: TProps & StylePropsOf<TDefaultType>) => Styles
 }
 
 interface StyledFactory<TDefaultType extends ElementType> {
-  (...args: CssTemplate["Args"]): SFC<TDefaultType, {}, Styles>
+  (...args: CssTemplate["Args"]): SFC<TDefaultType, {}>
 
-  (...args: [StyleNode]): SFC<TDefaultType, {}, Styles>
+  (...args: [StyleNode]): SFC<TDefaultType, {}>
 
   <TProps extends object = {}>(
-    ...args: [RecipeFactory<TProps>]
-  ): SFC<TDefaultType, TProps, (props: TProps) => Styles>
+    ...args: [RecipeFactory<TProps & StylePropsOf<TDefaultType>>]
+  ): SFC<TDefaultType, TProps>
 }
+
+const stylesWithProps = (
+  styles: Styles | ((props: StyledProps) => Styles) | null,
+  props: StyledProps,
+) => (!styles ? null : styles instanceof Styles ? styles : styles(props))
+
+const isSfc = (type: ElementType): type is SFC<any, any> =>
+  typeof type === "function" && "_isSfc" in type && type._isSfc
+
+const getStylesFromType = (type: ElementType) => {
+  if (!isSfc(type)) return null
+  return type.styles as Styles | ((props: StyledProps) => Styles)
+}
+
+const mergeCache: Record<string, [string, string]> = {}
 
 const createComponent = (
   defaultType: ElementType,
   styles: Styles | ((props: object) => Styles),
 ) => {
-  const getProps = (props: StyledProps, filterProps: string[] = []) => {
-    // Set a flag if the current components had a previous className
-    // similar to "go...". This is the append/prepend flag
-    const prev = (props as { className?: string | undefined }).className
-    const append = !!prev && / *go\d+/.test(prev)
+  const getStyles = (props: object, as = defaultType) => {
+    const base = stylesWithProps(getStylesFromType(as), props)
+    const next = stylesWithProps(styles, props)
+    const merged = new Styles(merge(base?.styles ?? {}, next?.styles ?? {}))
+    return { base, next, merged }
+  }
 
-    const className = (styles instanceof Styles ? styles : styles(props))
-      .withConfig({ append })
-      .inject()
+  const injectCss = (props: StyledProps, type: ElementType) => {
+    const prev = (props as { className?: string | undefined }).className ?? ""
 
-    const fwdProps = { ...props }
-    filterProps.forEach(key => delete fwdProps[key])
+    const classList = prev.split(/\s+/).flatMap(name => {
+      const trimmed = name.trim()
+      return trimmed ? [trimmed] : []
+    })
 
-    return {
-      ...fwdProps,
-      className: className + (prev ? ` ${prev}` : ""),
+    const styles = getStyles(props, type)
+
+    const baseClass = styles.base?.class ?? ""
+    const nextClass = styles.next?.class ?? ""
+    const mergedClass = styles.merged.class
+
+    if (baseClass && nextClass) {
+      mergeCache[mergedClass] = [baseClass, nextClass]
     }
+
+    // a previously merged class might have already included these styles through styled(ThisComponent)
+    const alreadyIncludesStyles = classList.some(name => {
+      const existing = mergeCache[name]
+      return existing?.includes(nextClass)
+    })
+
+    return alreadyIncludesStyles
+      ? prev
+      : [styles.merged.inject(), ...classList].join(" ")
   }
 
   function Styled(this: StyledContext | void, { as, ...props }: StyledProps) {
-    return getSetup().jsx(as ?? defaultType, getProps(props, this?.filterProps))
+    const type = as ?? defaultType
+
+    const fwdProps = { ...props }
+    this?.filterProps.forEach(key => delete fwdProps[key])
+
+    return getSetup().jsx(type, {
+      ...fwdProps,
+      className: injectCss(props, type),
+    })
   }
 
   const typeName =
@@ -108,8 +153,9 @@ const createComponent = (
 
   const create = (Component: typeof Styled) =>
     Object.assign(Component, {
+      _isSfc: true,
       displayName,
-      styles,
+      styles: (props: object) => getStyles(props).merged,
       filterProps: (filterProps: (keyof object)[]) =>
         create(Component.bind({ filterProps })),
     })
@@ -140,7 +186,9 @@ function createStyled<TDefaultType extends ElementType>(
 
 type ProxyTarget = {
   [TKey in ElementName]: StyledFactory<TKey>
-} & (<TType extends FC<any>>(type: TType) => StyledFactory<TType>)
+} & (<TType extends FC<any> | SFC<any, any>>(
+  type: TType,
+) => StyledFactory<TType>)
 
 /** Create React components that have styles attached to them. */
 export const styled = new Proxy(createStyled as ProxyTarget, {
