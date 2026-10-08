@@ -1,10 +1,10 @@
 import { afterEach } from "vitest"
 
-import { resetHashCache } from "../utils/hash"
+import { resetStyleCache } from "../utils/hash"
 import { getCsrSheet, getSsrSheet, GOOBRRR_ID } from "../utils/style-sheet"
 
 const resetCaches = () => {
-  resetHashCache()
+  resetStyleCache()
   getSsrSheet().data = " "
   getCsrSheet()!.data = " "
   document.getElementById(GOOBRRR_ID.CSR)?.remove()

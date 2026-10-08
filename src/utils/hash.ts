@@ -2,12 +2,12 @@ import { parser, type StyleNode } from "./parser"
 import { updateSheet } from "./style-sheet"
 import { toHash } from "./to-hash"
 
-/** In-memory cache. */
-const cache: Record<string, string> = {}
+/** In-memory cache to store generated styles. */
+const styleCache: Record<string, string> = {}
 
 /** Empty the hash cache. Should only be used in unit testing. */
-export const resetHashCache = () =>
-  Object.keys(cache).forEach(key => delete cache[key])
+export const resetStyleCache = () =>
+  Object.keys(styleCache).forEach(key => delete styleCache[key])
 
 /** Stringifies an object structure. */
 const getIdentifier = (
@@ -19,10 +19,8 @@ const getIdentifier = (
   return out
 }
 
-const createClassName = (compiled: StyleNode | string) => {
-  const identifier = getIdentifier(compiled)
-  return (cache[identifier] ??= toHash(identifier))
-}
+const createClassName = (compiled: StyleNode | string) =>
+  toHash(getIdentifier(compiled))
 
 export type InjectionType = "class" | "global" | "keyframes"
 
@@ -31,17 +29,22 @@ const createStyles = (
   compiled: StyleNode | string,
   type: InjectionType,
 ) => {
-  if (cache[className]) return cache[className]
-  const ast =
-    typeof compiled === "string" ? parser.toObject(compiled) : compiled
-
   const selector = {
     class: `.${className}`,
     keyframes: `@keyframes ${className}`,
     global: undefined,
   }[type]
 
-  return parser.toString(ast, selector, type)
+  const getStylesString = () => {
+    const ast =
+      typeof compiled === "string" ? parser.toObject(compiled) : compiled
+    return parser.toString(ast, selector, type)
+  }
+
+  // without a hashed selector, there is no stable key representing the styles
+  return !selector
+    ? getStylesString()
+    : (styleCache[selector] ??= getStylesString())
 }
 
 const update = (css: string, append?: boolean, cssToReplace?: string) =>
@@ -70,8 +73,8 @@ export const hash = (
   // to allow replacing styles in <style /> instead of appending them.
   // This is required for using `createGlobalStyles` with themes
   if (type === "global") {
-    update(styles, append, cache["g"])
-    cache["g"] = styles
+    update(styles, append, styleCache["g"])
+    styleCache["g"] = styles
   } else {
     update(styles, append)
   }
