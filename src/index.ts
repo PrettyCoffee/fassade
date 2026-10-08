@@ -1,3 +1,4 @@
+export { createTheme } from "./create-theme"
 export { setup, type SetupConfig, type Theme } from "./setup"
 export { extractCss } from "./extract-css"
 export { css, glob, keyframes } from "./css"
