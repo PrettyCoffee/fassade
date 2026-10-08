@@ -94,7 +94,7 @@ describe("Test Styles", () => {
 
   it("creates a new instance with overridden configuration", () => {
     const styles = new Styles({ body: { margin: 0 } })
-    const global = styles.withConfig({ type: "global", append: true })
+    const global = styles.withConfig({ type: "global" })
 
     expect(global).not.toBe(styles)
     expect(global.styles).toBe(styles.styles)

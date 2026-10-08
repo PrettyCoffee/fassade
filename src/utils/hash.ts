@@ -47,23 +47,21 @@ const createStyles = (
     : (styleCache[selector] ??= getStylesString())
 }
 
-const update = (css: string, append?: boolean, cssToReplace?: string) =>
+const update = (css: string, prepend?: boolean, cssToReplace?: string) =>
   updateSheet((data, ssr = "") => {
     if ((ssr + data).includes(css)) return data
     if (cssToReplace) return data.replace(cssToReplace, css)
-    return append ? css + data : data + css
+    return prepend ? css + data : data + css
   })
 
 /**
  * Generates the needed className.
  *
  * @param compiled Css to process.
- * @param append Append or prepend.
  * @param type What kind of css needs to be injected.
  */
 export const hash = (
   compiled: StyleNode | string,
-  append?: boolean,
   type: InjectionType = "class",
 ) => {
   const className = createClassName(compiled)
@@ -73,10 +71,10 @@ export const hash = (
   // to allow replacing styles in <style /> instead of appending them.
   // This is required for using `createGlobalStyles` with themes
   if (type === "global") {
-    update(styles, append, styleCache["g"])
+    update(styles, true, styleCache["g"])
     styleCache["g"] = styles
   } else {
-    update(styles, append)
+    update(styles, false)
   }
 
   return className

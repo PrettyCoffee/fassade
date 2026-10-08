@@ -4,7 +4,6 @@ import { parser, type StyleNode } from "./parser"
 
 interface StylesConfig {
   type?: InjectionType
-  append?: boolean
 }
 
 export class Styles {
@@ -22,8 +21,8 @@ export class Styles {
   /** Inject the styles into the dom and get the related css class. */
   public inject() {
     if (!this._injected) {
-      const { append, type } = this.config ?? {}
-      this._class = hash(this.styles, append, type)
+      const { type } = this.config ?? {}
+      this._class = hash(this.styles, type)
       this._injected = true
     }
     return this.class

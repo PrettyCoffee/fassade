@@ -21,7 +21,6 @@ describe("Test hash", () => {
   it("writes keyframes without a scope selector", () => {
     const className = hash(
       { from: { opacity: 0 }, to: { opacity: 1 } },
-      false,
       "keyframes",
     )
 
@@ -31,11 +30,7 @@ describe("Test hash", () => {
   })
 
   it("writes global styles without a selector", () => {
-    hash(
-      { className: { color: "red", opacity: 1, rotate: "45deg" } },
-      false,
-      "global",
-    )
+    hash({ className: { color: "red", opacity: 1, rotate: "45deg" } }, "global")
 
     expect(getCsrSheet()?.data).toBe(
       `className{color:red;opacity:1;rotate:45deg;}`,
