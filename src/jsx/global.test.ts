@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { css } from "../css"
-import { getCsrSheet, GOOBRRR_ID } from "../utils/style-sheet"
+import { getCsrSheet, FASSADE_ID } from "../utils/style-sheet"
 import { Global } from "./global"
 
 describe("Test Global", () => {
@@ -12,7 +12,7 @@ describe("Test Global", () => {
       }
     `
 
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
     expect(Global({ styles })).toBeNull()
     expect(getCsrSheet()?.data).toBe("body{margin:0;}")
   })

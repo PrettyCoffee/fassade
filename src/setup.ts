@@ -12,7 +12,7 @@ interface Setup {
    * Preact.h)
    */
   jsx: (type: unknown, props?: object | null, ...args: any[]) => JSX.Element
-  /** List of goobrrr plugins. */
+  /** List of fassade plugins. */
   plugins: Plugin[]
 }
 const setupStore: Setup = {
@@ -20,12 +20,12 @@ const setupStore: Setup = {
   plugins: [minify()],
   jsx: () => {
     throw new Error(
-      "Goobrrr expected setup to provide a jsx function, but none was there. Did you call `setup({ jsx: ... })`?",
+      "Fassade expected setup to provide a jsx function, but none was there. Did you call `setup({ jsx: ... })`?",
     )
   },
 }
 
-/** Configure the behavior of goobrrr. */
+/** Configure the behavior of fassade. */
 export const setup = ({ theme, jsx, plugins }: Partial<Setup>) => {
   // oxlint-disable-next-line typescript/no-unnecessary-condition -- Theme type can be changed by user
   if (theme) setupStore.theme = theme

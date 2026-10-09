@@ -8,7 +8,7 @@ import {
   Icon,
 } from "demo-lib/components"
 
-import { css, styled } from "../goobrrr"
+import { css, styled } from "../fassade"
 import { Counter } from "./counter"
 import { ListDivider } from "./list-divider"
 
@@ -60,7 +60,7 @@ export const App = () => (
       <div>
         <H1>Get started</H1>
         <p>
-          Edit <Code>src/App.tsx</Code> and save to test <Code>goobrrr</Code>
+          Edit <Code>src/App.tsx</Code> and save to test <Code>fassade</Code>
         </p>
       </div>
       <Counter />
@@ -76,14 +76,14 @@ export const App = () => (
         <ButtonList>
           <Button
             as="a"
-            href="https://prettycoffee.github.io/goobrrr/"
+            href="https://prettycoffee.github.io/fassade/"
             target="_blank"
           >
             Read the docs
           </Button>
           <Button
             as="a"
-            href="https://github.com/PrettyCoffee/goobrrr/"
+            href="https://github.com/PrettyCoffee/fassade/"
             target="_blank"
           >
             Visit the repo
@@ -100,14 +100,14 @@ export const App = () => (
         <ButtonList>
           <Button
             as="a"
-            href="https://github.com/PrettyCoffee/goobrrr/compare"
+            href="https://github.com/PrettyCoffee/fassade/compare"
             target="_blank"
           >
             Raise a PR
           </Button>
           <Button
             as="a"
-            href="https://github.com/PrettyCoffee/goobrrr/issues/new"
+            href="https://github.com/PrettyCoffee/fassade/issues/new"
             target="_blank"
           >
             Create an issue

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { getCsrSheet, GOOBRRR_ID } from "./style-sheet"
+import { getCsrSheet, FASSADE_ID } from "./style-sheet"
 import { Styles } from "./styles"
 
 describe("Test Styles", () => {
@@ -12,7 +12,7 @@ describe("Test Styles", () => {
   it("injects styles lazily and caches the generated class", () => {
     const styles = new Styles({ color: "rebeccapurple" })
 
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
 
     const className = styles.inject()
 
@@ -24,13 +24,13 @@ describe("Test Styles", () => {
   it("generates a class without injecting styles", () => {
     const styles = new Styles({ color: "purple" })
 
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
 
     const className = styles.class
     expect(className).toBeTruthy()
     expect(styles.class).toBe(className)
 
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
   })
 
   it("deeply merges appended styles", () => {
@@ -106,6 +106,6 @@ describe("Test Styles", () => {
     const styles = new Styles({ color: "red", "&:focus": { outline: "none" } })
 
     expect(styles.toString()).toBe("color:red;&:focus{outline:none;}")
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
   })
 })

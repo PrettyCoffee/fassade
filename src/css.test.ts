@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { css, glob, keyframes } from "./css"
-import { getCsrSheet, GOOBRRR_ID } from "./utils/style-sheet"
+import { getCsrSheet, FASSADE_ID } from "./utils/style-sheet"
 import { Styles } from "./utils/styles"
 
 describe("Test css", () => {
@@ -29,7 +29,7 @@ describe("Test css", () => {
   it("injects regular styles only when the class is accessed", () => {
     const styles = css({ color: "red" })
 
-    expect(document.getElementById(GOOBRRR_ID.CSR)).toBeNull()
+    expect(document.getElementById(FASSADE_ID.CSR)).toBeNull()
 
     const className = styles.inject()
 

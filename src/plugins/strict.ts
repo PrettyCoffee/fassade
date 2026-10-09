@@ -3,11 +3,11 @@ import { type Plugin } from "./plugin"
 const isEmpty = (string = "") => !string.replaceAll(/\s+/gm, "")
 
 const warn = (ctx: unknown, message: string) => {
-  console.warn(`[goobrrr strict mode]: ${message} \nContext:`, ctx)
+  console.warn(`[fassade strict mode]: ${message} \nContext:`, ctx)
 }
 const error = (ctx: unknown, message: string) => {
   console.error(`${message} \nContext:`, ctx)
-  throw new Error("goobrrr strict mode reported an error")
+  throw new Error("fassade strict mode reported an error")
 }
 const report = { warn, error, off: () => null }
 

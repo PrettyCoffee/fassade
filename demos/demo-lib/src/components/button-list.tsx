@@ -1,6 +1,6 @@
 import { Children, type PropsWithChildren } from "react"
 
-import { styled } from "../goobrrr"
+import { styled } from "../fassade"
 
 const List = styled.ul`
   padding: 0;

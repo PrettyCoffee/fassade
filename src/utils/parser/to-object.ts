@@ -14,7 +14,7 @@ const collapseWhitespace = (string: string) =>
 
 const warn = (message: string, source: string) => {
   const snippet = source.trim().replaceAll(/\s+/g, " ").slice(0, 80)
-  console.warn(`[goobrrr]: ${message}: ${snippet}`)
+  console.warn(`[fassade]: ${message}: ${snippet}`)
 }
 
 const uniqueKey = (key: string, node: StyleNode) => {

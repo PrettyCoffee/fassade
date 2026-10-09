@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "demo-lib": "workspace:*",
-    "goobrrr": "workspace:*",
+    "fassade": "workspace:*",
     "preact": "10.29.8"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { css, styled } from "../goobrrr"
+import { css, styled } from "../fassade"
 
 const Border = styled.span(
   (_props, t) => css`

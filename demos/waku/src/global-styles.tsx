@@ -1,7 +1,7 @@
 import { globalStyles } from "demo-lib/components"
-import { Global } from "demo-lib/goobrrr"
+import { Global } from "demo-lib/fassade"
 
-import { ExtractCss } from "./goobrrr"
+import { ExtractCss } from "./fassade"
 
 export const GlobalStyles = () => (
   <>

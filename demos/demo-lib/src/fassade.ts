@@ -1,11 +1,11 @@
 import { createElement } from "react"
 
-import { setup } from "goobrrr"
-import { pretty, minify, strict } from "goobrrr/plugins"
+import { setup } from "fassade"
+import { pretty, minify, strict } from "fassade/plugins"
 
 import { theme } from "./theme"
 
-declare module "goobrrr" {
+declare module "fassade" {
   interface SetupConfig {
     theme: typeof theme
   }
@@ -17,5 +17,5 @@ setup({
   plugins: import.meta.env.DEV ? [pretty(), strict()] : [minify()],
 })
 
-export * from "goobrrr"
-export * from "goobrrr/jsx"
+export * from "fassade"
+export * from "fassade/jsx"

@@ -6,10 +6,10 @@
   "exports": {
     "./components": "./src/components/index.ts",
     "./hooks": "./src/hooks/index.ts",
-    "./goobrrr": "./src/goobrrr.ts"
+    "./fassade": "./src/fassade.ts"
   },
   "dependencies": {
-    "goobrrr": "workspace:*",
+    "fassade": "workspace:*",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

@@ -68,7 +68,7 @@ const matchers: Matcher[] = [
     type: "string",
     handler(key, value) {
       throw new Error(
-        `CSS imports are not supported by goobrrr.\nImport: ${key} ${value}`,
+        `CSS imports are not supported by fassade.\nImport: ${key} ${value}`,
       )
     },
   },
@@ -136,7 +136,7 @@ const build = (obj: StyleNode, ctx: HookContext) => {
     })
 
     if (!rule) {
-      throw new Error("Parser error in goobrrr occured")
+      throw new Error("Parser error in fassade occured")
     }
 
     rule.handler(

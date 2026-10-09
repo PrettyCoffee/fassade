@@ -1,4 +1,4 @@
-import { css } from "../goobrrr"
+import { css } from "../fassade"
 import { theme } from "../theme"
 
 export const globalStyles = css`

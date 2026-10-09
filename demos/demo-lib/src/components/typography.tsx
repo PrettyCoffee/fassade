@@ -1,4 +1,4 @@
-import { css, styled, type Theme } from "../goobrrr"
+import { css, styled, type Theme } from "../fassade"
 
 const heading = (t: Theme) => css`
   font-family: ${t("font.head")};

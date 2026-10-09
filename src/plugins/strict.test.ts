@@ -42,7 +42,7 @@ describe("strict plugin", () => {
     vi.spyOn(console, "error").mockImplementation(() => {})
 
     expect(() => violate(strict())).toThrow(
-      "goobrrr strict mode reported an error",
+      "fassade strict mode reported an error",
     )
   })
 

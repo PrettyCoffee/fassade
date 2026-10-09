@@ -1,4 +1,4 @@
-import { css, styled, variants } from "../goobrrr"
+import { css, styled, variants } from "../fassade"
 
 const button = variants(t => ({
   base: css`

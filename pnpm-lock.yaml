@@ -47,7 +47,7 @@ importers:
 
   demos/demo-lib:
     dependencies:
-      goobrrr:
+      fassade:
         specifier: workspace:*
         version: link:../..
       react:
@@ -72,7 +72,7 @@ importers:
       demo-lib:
         specifier: workspace:*
         version: link:../demo-lib
-      goobrrr:
+      fassade:
         specifier: workspace:*
         version: link:../..
       preact:
@@ -94,7 +94,7 @@ importers:
       demo-lib:
         specifier: workspace:*
         version: link:../demo-lib
-      goobrrr:
+      fassade:
         specifier: workspace:*
         version: link:../..
       react:
@@ -125,7 +125,7 @@ importers:
       demo-lib:
         specifier: workspace:*
         version: link:../demo-lib
-      goobrrr:
+      fassade:
         specifier: workspace:*
         version: link:../..
       react:

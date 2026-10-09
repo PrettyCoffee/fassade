@@ -30,7 +30,7 @@ describe("Test plugin integration", () => {
     const frames = { from: { opacity: 0 } }
 
     expect(() => toString(frames, "@keyframes fade", "class")).toThrow(
-      "goobrrr strict mode reported an error",
+      "fassade strict mode reported an error",
     )
     expect(toString(frames, "@keyframes fade", "keyframes")).toBe(
       "@keyframes fade{from{opacity:0;}}",
