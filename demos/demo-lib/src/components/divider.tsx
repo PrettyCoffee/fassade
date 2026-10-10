@@ -32,6 +32,7 @@ const HBorder = styled(Border)(
     }
   `,
 )
+HBorder.styles({}).inject()
 
 const VBorder = styled(Border)(
   (_props, t) => css`
@@ -50,6 +51,7 @@ const VBorder = styled(Border)(
     }
   `,
 )
+VBorder.styles({}).inject()
 
 interface DividerProps {
   orientation?: "horizontal" | "vertical"

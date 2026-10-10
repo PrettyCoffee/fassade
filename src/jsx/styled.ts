@@ -31,7 +31,7 @@ type PropsOf<T extends ElementType> =
         : never
 
 interface StyledContext<TProps extends object = object> {
-  filterProps: (keyof TProps)[]
+  filterProps?: (keyof TProps)[]
 }
 
 type StyledProps<
@@ -137,7 +137,7 @@ const createComponent = (
     const type = as ?? defaultType
 
     const fwdProps = { ...props }
-    this?.filterProps.forEach(key => delete fwdProps[key])
+    this?.filterProps?.forEach(key => delete fwdProps[key])
 
     return getSetup().jsx(type, {
       ...fwdProps,
