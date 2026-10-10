@@ -93,6 +93,17 @@ const getStylesFromType = (type: ElementType) => {
 
 const mergeCache: Record<string, [string, string]> = {}
 
+// a previously merged class might have already included these styles through styled(ThisComponent)
+const alreadyIncludesStyles = (className: string, classList: string[]) => {
+  const getCandidates = (list = classList): string[] =>
+    list.flatMap(name => {
+      const added = getCandidates(mergeCache[name] ?? [])
+      return [name, ...added]
+    })
+
+  return getCandidates().includes(className)
+}
+
 const createComponent = (
   defaultType: ElementType,
   styles: Styles | ((props: object) => Styles),
@@ -122,13 +133,7 @@ const createComponent = (
       mergeCache[mergedClass] = [baseClass, nextClass]
     }
 
-    // a previously merged class might have already included these styles through styled(ThisComponent)
-    const alreadyIncludesStyles = classList.some(name => {
-      const existing = mergeCache[name]
-      return existing?.includes(nextClass)
-    })
-
-    return alreadyIncludesStyles
+    return alreadyIncludesStyles(mergedClass, classList)
       ? prev
       : [styles.merged.inject(), ...classList].join(" ")
   }
