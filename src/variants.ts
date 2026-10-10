@@ -105,11 +105,11 @@ const getProps = (
  * Create a variant based recipe, supporting base, variants, default, and
  * compound styles.
  */
-export function variants<TVariants extends VariantDefinitions>(
+export const variants = <TVariants extends VariantDefinitions>(
   variantConfig:
     | VariantsConfig<TVariants>
     | ((theme: Theme) => VariantsConfig<TVariants>),
-) {
+) => {
   const config =
     typeof variantConfig === "function"
       ? variantConfig(getTheme())

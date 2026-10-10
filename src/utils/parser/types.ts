@@ -9,5 +9,5 @@ type CssProperties = Partial<Record<CssAttributeName, string | number>>
 */
 
 export type StyleNode = CSSProperties & {
-  [cssVarOrSelector: string]: StyleNode | string | number
+  [cssVarOrSelector: string]: StyleNode | string | number | undefined
 }

@@ -163,9 +163,9 @@ const createComponent = (
   return create(Styled)
 }
 
-function createStyled<TDefaultType extends ElementType>(
+const createStyled = <TDefaultType extends ElementType>(
   defaultType: TDefaultType,
-) {
+) => {
   const factory = (
     ...[styles, ...values]:
       | CssTemplate["Args"]

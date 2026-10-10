@@ -9,11 +9,13 @@ export type RecipeFactory<TProps extends object> = (
   theme: Theme,
 ) => Conditional<Styles | StyleNode> | Conditional<Styles | StyleNode>[]
 
-export function recipe<TProps extends object>(create: RecipeFactory<TProps>) {
-  return (props: TProps): Styles => {
+export const recipe =
+  <TProps extends object>(create: RecipeFactory<TProps>) =>
+  (props: TProps): Styles => {
     const array = [create(props, getTheme())]
       .flat()
+      .filter(styles => !!styles)
       .map(styles => (styles instanceof Styles ? styles.styles : styles))
+
     return new Styles(merge(...array))
   }
-}

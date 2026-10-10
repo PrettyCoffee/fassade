@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest"
 import { getCssString, joinCssTemplate } from "./css-template"
 import { Styles } from "./styles"
 
-describe("Test compile", () => {
+describe("Test css template utilities", () => {
   it.each`
     name           | value                           | result
     ${"Styles"}    | ${new Styles({ opacity: 0.5 })} | ${"opacity:0.5;"}

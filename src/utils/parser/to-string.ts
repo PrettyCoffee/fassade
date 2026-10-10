@@ -126,6 +126,7 @@ const build = (obj: StyleNode, ctx: HookContext) => {
 
   Object.entries(obj).forEach(([key, raw]) => {
     const value = typeof raw === "number" ? String(raw) : raw
+    if (value == null) return
 
     const rule = matchers.find(({ matcher, type }) => {
       if (!matcher.test(key)) return false

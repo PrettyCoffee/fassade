@@ -8,7 +8,7 @@ export type CssTemplate = Template<
 >
 
 export const getCssString = (value: CssTemplate["Value"]): string => {
-  if (value == null || value === false) return ""
+  if (value == null || value === false || value === "") return ""
   if (Array.isArray(value)) return value.map(getCssString).join("")
   if (value instanceof Styles) return value.toString()
   if (typeof value === "object") return parser.toString(value)
