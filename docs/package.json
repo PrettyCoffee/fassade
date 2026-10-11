@@ -15,7 +15,8 @@
   "dependencies": {
     "fassade": "workspace:*",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "shiki": "4.5.0"
   },
   "devDependencies": {
     "@types/react": "19.3.0",
