@@ -7,7 +7,7 @@ const heading = (t: Theme) => css`
 `
 
 export const H1 = styled.h1(
-  (_props, t) => css`
+  ({ t }) => css`
     ${heading(t)}
     font-size: 56px;
     letter-spacing: -1.68px;
@@ -20,7 +20,7 @@ export const H1 = styled.h1(
 )
 
 export const H2 = styled.h1(
-  (_props, t) => css`
+  ({ t }) => css`
     ${heading(t)}
     font-size: 24px;
     line-height: 118%;
@@ -33,7 +33,7 @@ export const H2 = styled.h1(
 )
 
 export const Code = styled.code(
-  (_props, t) => css`
+  ({ t }) => css`
     font-family: ${t("font.mono")};
     display: inline-flex;
     border-radius: 4px;

@@ -8,11 +8,13 @@ import { theme } from "./theme"
 declare module "fassade" {
   interface SetupConfig {
     theme: typeof theme
+    themePropName: "t"
   }
 }
 
 setup({
   theme,
+  themePropName: "t",
   jsx: createElement,
   plugins: import.meta.env.DEV ? [pretty(), strict()] : [minify()],
 })

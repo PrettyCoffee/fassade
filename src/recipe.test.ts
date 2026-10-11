@@ -12,7 +12,7 @@ describe("Test recipe", () => {
     const props = { tone: "tomato" }
     const styles = createRecipe(props)
 
-    expect(create).toHaveBeenCalledWith(props, null)
+    expect(create).toHaveBeenCalledWith(props)
     expect(styles).toBeInstanceOf(Styles)
     expect(styles.toString()).toBe("color:tomato;")
   })
@@ -74,6 +74,15 @@ describe("Test recipe", () => {
     const mock = vi.fn()
     recipe(mock)({})
 
-    expect(mock).toHaveBeenCalledWith({}, theme)
+    expect(mock).toHaveBeenCalledWith({ theme })
+  })
+
+  it("provides a theme with custom key to recipe", () => {
+    const theme = { color: "blue" } as Theme
+    setup({ theme, themePropName: "t" as "theme" })
+    const mock = vi.fn()
+    recipe(mock)({})
+
+    expect(mock).toHaveBeenCalledWith({ t: theme })
   })
 })

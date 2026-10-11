@@ -15,5 +15,5 @@ const resetCaches = () => {
 // oxlint-disable-next-line vitest/require-top-level-describe -- this is a global afterEach
 afterEach(() => {
   resetCaches()
-  setup({ theme: null as Theme })
+  setup({ theme: undefined as Theme })
 })

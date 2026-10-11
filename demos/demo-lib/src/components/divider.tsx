@@ -1,7 +1,7 @@
 import { css, styled } from "../fassade"
 
 const Border = styled.span(
-  (_props, t) => css`
+  ({ t }) => css`
     position: relative;
     display: block;
     background: ${t("stroke")};
@@ -16,7 +16,7 @@ const Border = styled.span(
 )
 
 const HBorder = styled(Border)(
-  (_props, t) => css`
+  ({ t }) => css`
     min-width: 100%;
     height: 1px;
 
@@ -35,7 +35,7 @@ const HBorder = styled(Border)(
 HBorder.styles({}).inject()
 
 const VBorder = styled(Border)(
-  (_props, t) => css`
+  ({ t }) => css`
     min-height: 100%;
     width: 1px;
 

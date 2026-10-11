@@ -5,8 +5,18 @@ import { minify, type Plugin } from "./plugins"
 // oxlint-disable-next-line typescript/no-empty-interface -- can be extended by users
 export interface SetupConfig {}
 
+export type Theme = SetupConfig extends { theme: infer Theme }
+  ? Theme
+  : object | undefined
+export type ThemePropName = SetupConfig extends {
+  themePropName: infer ThemePropName
+}
+  ? ThemePropName
+  : "theme"
+
 interface Setup {
   theme: Readonly<Theme>
+  themePropName: ThemePropName
   /**
    * JSX function to create a virtual dom node. (i.e. React.createElement or
    * Preact.h)
@@ -17,6 +27,7 @@ interface Setup {
 }
 const setupStore: Setup = {
   theme: null as never,
+  themePropName: "theme",
   plugins: [minify()],
   jsx: () => {
     throw new Error(
@@ -26,14 +37,25 @@ const setupStore: Setup = {
 }
 
 /** Configure the behavior of fassade. */
-export const setup = ({ theme, jsx, plugins }: Partial<Setup>) => {
-  // oxlint-disable-next-line typescript/no-unnecessary-condition -- Theme type can be changed by user
+export const setup = ({
+  theme,
+  themePropName,
+  jsx,
+  plugins,
+}: Partial<Setup>) => {
   if (theme) setupStore.theme = theme
+  if (themePropName) setupStore.themePropName = themePropName
   if (jsx) setupStore.jsx = jsx
   if (plugins) setupStore.plugins = plugins
 }
 
 export const getSetup = () => setupStore
 
-export type Theme = SetupConfig extends { theme: infer Theme } ? Theme : never
+export type WithTheme<TProps> = TProps & Record<ThemePropName, Theme>
 export const getTheme = () => getSetup().theme
+export const withTheme = <TProps>(props: TProps): WithTheme<TProps> => {
+  const theme = getTheme()
+  return !theme
+    ? (props as WithTheme<TProps>)
+    : { ...props, [getSetup().themePropName]: theme }
+}

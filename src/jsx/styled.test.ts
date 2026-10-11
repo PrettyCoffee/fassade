@@ -81,7 +81,16 @@ describe("Test styled", () => {
     const mock = vi.fn()
     styled.button(mock)({})
 
-    expect(mock).toHaveBeenCalledWith({}, theme)
+    expect(mock).toHaveBeenCalledWith({ theme })
+  })
+
+  it("provides a theme with custom key to styled components", () => {
+    const theme = { color: "blue" } as Theme
+    setup({ theme, themePropName: "t" as "theme" })
+    const mock = vi.fn()
+    styled.button(mock)({})
+
+    expect(mock).toHaveBeenCalledWith({ t: theme })
   })
 
   it("exposes a display name and the styles used by the component", () => {
