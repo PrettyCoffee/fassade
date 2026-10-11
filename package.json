@@ -41,6 +41,7 @@
   },
   "scripts": {
     "build": "tsc -b && tsdown",
+    "build:all": "pnpm run build && pnpm -r run build",
     "dev": "pnpm run dev:lib & cd demos/vite && pnpm run dev",
     "dev:waku": "pnpm run dev:lib & cd demos/waku && pnpm run dev",
     "dev:lib": "pnpm run build --watch",
@@ -49,6 +50,7 @@
     "test:watch": "vitest watch",
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt --write",
+    "validate": "pnpm run build:all && pnpm run lint && pnpm run test",
     "prepare": "husky"
   },
   "peerDependencies": {

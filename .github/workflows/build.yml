@@ -28,7 +28,7 @@ jobs:
           require-lockfile: true
 
       - name: Build project
-        run: pnpm run build
+        run: pnpm run build:all
 
       - name: Lint code
         run: pnpm run lint
