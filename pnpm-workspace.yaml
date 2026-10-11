@@ -11,4 +11,5 @@ trustPolicy: no-downgrade
 ignoreWorkspaceRootCheck: true
 packages:
   - ./
+  - docs
   - demos/*

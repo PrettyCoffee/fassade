@@ -1,0 +1,28 @@
+{
+  "name": "@fassade/docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "imports": {
+    "#components": "./src/components/index.ts",
+    "#lib/*": "./src/lib/*.ts"
+  },
+  "scripts": {
+    "dev": "waku dev",
+    "build": "tsc -b && waku build",
+    "preview": "pnpm build && waku start"
+  },
+  "dependencies": {
+    "fassade": "workspace:*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "react-server-dom-webpack": "19.3.0",
+    "vite": "8.3.1",
+    "waku": "1.0.0-rc.1"
+  }
+}

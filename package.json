@@ -42,7 +42,8 @@
   "scripts": {
     "build": "tsc -b && tsdown",
     "build:all": "pnpm run build && pnpm -r run build",
-    "dev": "pnpm run dev:lib & cd demos/vite && pnpm run dev",
+    "docs": "pnpm run dev:lib & sleep 1s && cd docs && pnpm run dev",
+    "dev": "pnpm run dev:lib & sleep 1s && cd demos/vite && pnpm run dev",
     "dev:waku": "pnpm run dev:lib & cd demos/waku && pnpm run dev",
     "dev:lib": "pnpm run build --watch",
     "test": "vitest run",
