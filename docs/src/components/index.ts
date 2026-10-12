@@ -1,4 +1,6 @@
 export * from "./border"
 export * from "./code"
+export * from "./icon"
+export * from "./icon-button"
 export * from "./live-code-example/live-code-example"
 export * from "./space"
