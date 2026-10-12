@@ -13,6 +13,7 @@
     "preview": "pnpm build && waku start"
   },
   "dependencies": {
+    "@swc/wasm-web": "1.16.13",
     "fassade": "workspace:*",
     "react": "19.3.0",
     "react-dom": "19.3.0",

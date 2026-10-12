@@ -156,6 +156,9 @@ importers:
 
   docs:
     dependencies:
+      '@swc/wasm-web':
+        specifier: 1.16.13
+        version: 1.16.13
       fassade:
         specifier: workspace:*
         version: link:..
@@ -657,6 +660,9 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
+
+  '@swc/wasm-web@1.16.13':
+    resolution: {integrity: sha512-DyHZn/ohb3NKPJXsPRHDQohyeuvYLNa3Q8ns0doZMVEflsT3n24Ow9fmmzn0TL5fQfLrWh0exjBFcQ9uDzPA4g==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -2347,6 +2353,8 @@ snapshots:
       '@types/hast': 3.0.5
 
   '@shikijs/vscode-textmate@10.0.2': {}
+
+  '@swc/wasm-web@1.16.13': {}
 
   '@types/chai@5.2.3':
     dependencies:
