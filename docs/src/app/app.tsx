@@ -1,5 +1,6 @@
 import { Code, LiveCodeExample, Space } from "#components"
 
+import { Section } from "../components/section"
 import { cleanCode } from "../utils/clean-code"
 import example from "./code-example?raw"
 
@@ -36,24 +37,28 @@ render(<Counter />)
 
 export const App = () => (
   <>
-    <h2>Getting Started</h2>
-    <p>Docs are WIP</p>
-    <Space bottom="2rem" />
+    <Section index={1} title="Getting Started">
+      <p>Docs are WIP</p>
+    </Section>
 
-    <h2>Code Example</h2>
-    <Code code={cleanCode(example)} />
-    <Space bottom="2rem" />
+    <Section index={2} title="Code Example">
+      <Code code={cleanCode(example)} />
+    </Section>
 
-    <h2>Live Editor</h2>
-    <h3>Vanilla</h3>
-    <LiveCodeExample
-      initialHtml={previewHtml}
-      initialJs={previewJs}
-      className="full-width"
-    />
-    <Space bottom="2rem" />
-    <h3>React</h3>
-    <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
+    <Section index={3} title="Live Editor">
+      <p>Try out the live editor below.</p>
+
+      <h3>Vanilla</h3>
+      <LiveCodeExample
+        initialHtml={previewHtml}
+        initialJs={previewJs}
+        className="full-width"
+      />
+      <Space bottom="2rem" />
+      <h3>React</h3>
+      <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
+    </Section>
+
     <Space bottom="100rem" />
   </>
 )

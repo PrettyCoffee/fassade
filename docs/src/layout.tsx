@@ -22,7 +22,8 @@ const Header = styled.header(
     top: 0;
     z-index: 1000;
 
-    background: ${t("bg.default")};
+    backdrop-filter: blur(2px);
+    background-color: color-mix(in srgb, ${t("bg.default")} 50%, transparent);
     height: 4rem;
   `,
 )
@@ -82,29 +83,7 @@ const Main = styled.main(
 const MainLayout = styled.div`
   display: flex;
   flex-direction: column;
-
-  > :not(.full-width) {
-    width: 100%;
-    max-width: 50rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
 `
-
-const ScrollGradient = styled.div(
-  ({ t }) => css`
-    position: sticky;
-    top: 4rem;
-    width: 100%;
-    height: 2rem;
-    z-index: 1000;
-    background: linear-gradient(
-      to bottom,
-      ${t("bg.default")} 0.125rem,
-      transparent
-    );
-  `,
-)
 
 export const Layout = ({ children }: PropsWithChildren) => (
   <Grid>
@@ -122,7 +101,6 @@ export const Layout = ({ children }: PropsWithChildren) => (
     </Side>
 
     <Main>
-      <ScrollGradient />
       <MainLayout>{children}</MainLayout>
     </Main>
   </Grid>

@@ -63,7 +63,7 @@ export const LiveCodeExample = ({
   }
 
   return (
-    <div className={className}>
+    <div className={className} style={{ isolation: "isolate" }}>
       <HBorder />
       <Layout>
         <Code>
