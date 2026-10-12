@@ -17,11 +17,11 @@ const highlighterPromise = createHighlighterCore({
   ],
 })
 
-const clean = (code: string) =>
-  code
-    // remove oxlint comments
-    .replaceAll(/^.*oxlint-disable.*$/gm, "")
-    .trim()
+// shiki trims whitespace, but it is needed for the editor
+const getWithTrailingWhitespace = (code: string, html: string) => {
+  const ending = /(\s+)$/.exec(code)?.[1] ?? ""
+  return html.replace(/<\/code><\/pre>$/, `${ending}</code></pre>`)
+}
 
 const Layout = styled.div`
   pre {
@@ -32,19 +32,29 @@ const Layout = styled.div`
 interface CodeProps {
   code: string
   className?: string
+  preserveTrailingWhitespace?: boolean
 }
 
-export const Code = ({ code, ...rest }: CodeProps) => {
+export const Code = ({
+  code,
+  preserveTrailingWhitespace,
+  ...rest
+}: CodeProps) => {
   const highlighter = use(highlighterPromise)
-  const html = highlighter.codeToHtml(clean(code), {
+  const html = highlighter.codeToHtml(code, {
     lang: "tsx",
     theme: "dark",
   })
+
   return (
     <Layout
       {...rest}
       // oxlint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{
+        __html: preserveTrailingWhitespace
+          ? getWithTrailingWhitespace(code, html)
+          : html,
+      }}
     />
   )
 }
