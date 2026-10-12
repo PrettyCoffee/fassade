@@ -8,17 +8,19 @@ import initSwc, { transform } from "@swc/wasm-web"
 
 import { css, glob, keyframes, recipe, styled, variants } from "#lib/fassade"
 
-const ErrorBackdrop = styled.div`
-  position: absolute;
-  inset: 0;
-  padding: 1rem;
-  background: color-mix(in srgb, red 5%, transparent);
-  backdrop-filter: blur(2px);
+const ErrorBackdrop = styled.div(
+  ({ t }) => css`
+    position: absolute;
+    inset: 0;
+    padding: 1rem;
+    background: color-mix(in srgb, ${t("alert.error")} 5%, transparent);
+    backdrop-filter: blur(2px);
 
-  display: flex;
-  align-items: end;
-  justify-content: center;
-`
+    display: flex;
+    align-items: end;
+    justify-content: center;
+  `,
+)
 
 const ErrorSurface = styled.div(
   ({ t }) => css`
@@ -30,11 +32,13 @@ const ErrorSurface = styled.div(
   `,
 )
 
-const ErrorTitle = styled.h3`
-  color: red;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-`
+const ErrorTitle = styled.h3(
+  ({ t }) => css`
+    color: ${t("alert.error")};
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  `,
+)
 
 const ErrorMessage = styled.pre(
   ({ t }) => css`

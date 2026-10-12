@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 import { styled } from "#lib/fassade"
 
+import { getWindow } from "../../utils/get-window"
 import { HBorder, VBorder } from "../border"
 import { CodeEditor } from "./code-editor"
 import { CodePreview } from "./code-preview"
@@ -17,7 +18,8 @@ const Layout = styled.div`
   }
 `
 
-const CodeHeight = styled.div`
+const Code = styled.div`
+  position: relative;
   height: 25rem;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -36,21 +38,56 @@ export const LiveCodeExample = ({
 }: LiveCodeExampleProps) => {
   const [html, setHtml] = useState(initialHtml)
   const [js, setJs] = useState(initialJs)
+  const [copied, setCopied] = useState(false)
 
   const jsEditor = <CodeEditor value={js} onChange={setJs} />
   const htmlEditor = <CodeEditor value={html} onChange={setHtml} />
+
+  const reset = () => {
+    setHtml(initialHtml)
+    setJs(initialJs)
+  }
+
+  const copyTimeout = useRef(0)
+  const copy = async (active: string) => {
+    const window = getWindow()
+    if (!window) return
+
+    window.clearTimeout(copyTimeout.current)
+
+    const text = active === "HTML" ? html : js
+    await window.navigator.clipboard.writeText(text)
+    setCopied(true)
+
+    copyTimeout.current = window.setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <div className={className}>
       <HBorder />
       <Layout>
-        <CodeHeight>
-          {!initialHtml ? (
-            jsEditor
-          ) : (
-            <CodeTabs tabs={{ JavaScript: jsEditor, HTML: htmlEditor }} />
-          )}
-        </CodeHeight>
+        <Code>
+          <CodeTabs
+            tabs={
+              !initialHtml && /render\(.+\)/.test(initialJs)
+                ? { JSX: jsEditor }
+                : { JavaScript: jsEditor, HTML: htmlEditor }
+            }
+            actions={[
+              {
+                icon: "erase",
+                title: "Revert changes",
+                onClick: reset,
+              },
+              {
+                icon: copied ? "copy-check" : "copy",
+                title: "Copy code",
+                onClick: active => void copy(active),
+                color: copied ? "alert.success" : undefined,
+              },
+            ]}
+          />
+        </Code>
 
         <VBorder />
 
