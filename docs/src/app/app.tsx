@@ -1,8 +1,7 @@
-import { Code, Space } from "#components"
+import { Code, LiveCodeExample, Space } from "#components"
 
 import { cleanCode } from "../utils/clean-code"
 import example from "./code-example?raw"
-import { PreviewExample } from "./preview-example"
 
 const previewHtml = '<p id="example">Hello from CodePreview</p>'
 const previewJs = cleanCode(`
@@ -17,7 +16,6 @@ const className = styles.inject()
 root.querySelector("#example")?.classList.add(className)
 `)
 
-const reactPreviewHtml = ""
 const reactPreviewJs = cleanCode(`
 const Btn = styled.button({
   color: "rebeccapurple",
@@ -46,12 +44,16 @@ export const App = () => (
     <Code code={cleanCode(example)} />
     <Space bottom="2rem" />
 
-    <h2>Code Previews</h2>
-    <PreviewExample initialHtml={previewHtml} initialJs={previewJs} />
+    <h2>Live Editor</h2>
+    <h3>Vanilla</h3>
+    <LiveCodeExample
+      initialHtml={previewHtml}
+      initialJs={previewJs}
+      className="full-width"
+    />
     <Space bottom="2rem" />
-
-    <h2>React Example</h2>
-    <PreviewExample initialHtml={reactPreviewHtml} initialJs={reactPreviewJs} />
+    <h3>React</h3>
+    <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
     <Space bottom="100rem" />
   </>
 )

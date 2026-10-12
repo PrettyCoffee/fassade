@@ -3,6 +3,7 @@ import { css, styled } from "#lib/fassade"
 const Border = styled.span(
   ({ t }) => css`
     position: relative;
+    z-index: 10;
     display: block;
     background: ${t("stroke.gentle")};
 

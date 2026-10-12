@@ -32,6 +32,7 @@ const dark = {
     default: neutral["900"],
   },
   stroke: {
+    default: neutral["500"],
     gentle: neutral["700"],
   },
 }
@@ -46,6 +47,7 @@ const light: typeof dark = {
     default: neutral["50"],
   },
   stroke: {
+    default: neutral["600"],
     gentle: neutral["400"],
   },
 }

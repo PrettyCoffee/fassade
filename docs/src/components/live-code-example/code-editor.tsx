@@ -1,9 +1,8 @@
 "use client"
-import { useState } from "react"
 
 import { css, styled } from "#lib/fassade"
 
-import { Code } from "./code"
+import { Code } from "../code"
 
 const sharedStyles = css`
   border: none;
@@ -25,7 +24,8 @@ const sharedStyles = css`
   word-break: keep-all;
   overflow-wrap: break-word;
 
-  min-height: 3.5rem;
+  min-height: max-content;
+  height: 100%;
   padding: 0.75rem 1rem;
   margin: 0;
 
@@ -72,36 +72,25 @@ const TextArea = styled.textarea(
 
 interface CodeEditorProps {
   placeholder?: string
-  initialValue?: string
-  value?: string
+  value: string
   onChange?: (value: string) => void
 }
 export const CodeEditor = ({
   placeholder,
-  initialValue,
-  value: controlledValue,
+  value,
   onChange,
-}: CodeEditorProps) => {
-  const [internalValue, setInternalValue] = useState(initialValue ?? "")
-  const value = controlledValue ?? internalValue
-  const setValue = controlledValue ? undefined : setInternalValue
+}: CodeEditorProps) => (
+  <Layout>
+    <Preview code={value} preserveTrailingWhitespace />
+    <TextArea
+      autoComplete="off"
+      autoCorrect="off"
+      autoCapitalize="off"
+      spellCheck="false"
 
-  return (
-    <Layout>
-      <Preview code={value} preserveTrailingWhitespace />
-      <TextArea
-        autoComplete="off"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck="false"
-
-        placeholder={placeholder}
-        value={value}
-        onChange={({ target }) => {
-          setValue?.(target.value)
-          onChange?.(target.value)
-        }}
-      />
-    </Layout>
-  )
-}
+      placeholder={placeholder}
+      value={value}
+      onChange={({ target }) => onChange?.(target.value)}
+    />
+  </Layout>
+)

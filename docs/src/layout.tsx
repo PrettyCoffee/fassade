@@ -75,16 +75,20 @@ const Main = styled.main(
   ({ t }) => css`
     grid-area: main;
     border-right: 1px solid ${t("stroke.gentle")};
-    padding: 0rem 2rem 2rem 2rem;
+    padding-bottom: 2rem;
   `,
 )
 
 const MainLayout = styled.div`
-  width: 100%;
-  max-width: 80ch;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+
+  > :not(.full-width) {
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 `
 
 const ScrollGradient = styled.div(
