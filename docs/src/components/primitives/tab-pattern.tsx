@@ -15,21 +15,20 @@ import {
 import { createContext } from "../../utils/create-context"
 
 type TabRef = RefObject<HTMLButtonElement | null>
-type TabId = string | number
 
 interface TabPatternContextState {
   baseId: string
-  activeTab: TabId | undefined
-  onTabChange: Dispatch<TabId | undefined>
-  tabList: Record<TabId, TabRef>
+  activeTab: string | undefined
+  onTabChange: Dispatch<string | undefined>
+  tabList: Record<string, TabRef>
 
-  addTab: (tab: TabId, tabRef: TabRef) => void
-  removeTab: (tab: TabId) => void
+  addTab: (tab: string, tabRef: TabRef) => void
+  removeTab: (tab: string) => void
 }
 
 const Context = createContext<TabPatternContextState>("TabPattern")
 
-const useTabIds = (tab: TabId) => {
+const useTabIds = (tab: string) => {
   const { baseId } = Context.useRequiredValue()
   return {
     panel: `${baseId}-${tab}-panel`,
@@ -38,7 +37,7 @@ const useTabIds = (tab: TabId) => {
 }
 
 interface TabRootProps {
-  initialTab?: TabId
+  initialTab?: string
 }
 const Root = ({ initialTab, children }: PropsWithChildren<TabRootProps>) => {
   const baseId = useId()
@@ -46,13 +45,13 @@ const Root = ({ initialTab, children }: PropsWithChildren<TabRootProps>) => {
   const [tabList, setTabList] = useState<TabPatternContextState["tabList"]>({})
 
   const addTab = useCallback(
-    (tab: TabId, tabRef: TabRef) =>
+    (tab: string, tabRef: TabRef) =>
       setTabList(tabList => ({ ...tabList, [tab]: tabRef })),
     [],
   )
 
   const removeTab = useCallback(
-    (tab: TabId) =>
+    (tab: string) =>
       // oxlint-disable-next-line unused-imports/no-unused-vars -- explicitly used to remove this
       setTabList(({ [tab]: _removed, ...tabList }) => tabList),
     [],
@@ -123,7 +122,7 @@ const getNavigableTabs = (
 }
 
 interface TabProps {
-  id: TabId
+  id: string
   className?: string
 }
 
@@ -180,7 +179,7 @@ const Tab = ({ children, id, ...delegated }: PropsWithChildren<TabProps>) => {
 }
 
 interface PanelProps {
-  id: TabId
+  id: string
   className?: string
 }
 const Panel = ({
