@@ -1,3 +1,5 @@
+export { FASSADE_ID } from "./utils/style-sheet"
+
 export { createTheme } from "./create-theme"
 export { setup, type SetupConfig, type Theme } from "./setup"
 export { extractCss } from "./extract-css"

@@ -1,7 +1,8 @@
 import { type PropsWithChildren } from "react"
 
-import { Global, ExtractCss, css } from "#lib/fassade"
+import { ExtractServerCss, Global, css } from "#lib/fassade"
 
+import { ExtractClientCss } from "./extract-client-css"
 import { theme } from "./theme"
 
 const themeStyles = css`
@@ -93,8 +94,9 @@ export const Root = ({ children }: PropsWithChildren) => (
       <title>Fassade</title>
 
       <Global styles={globalStyles} />
-      <ExtractCss />
       <ApplyUserTheme />
+      <ExtractServerCss />
+      <ExtractClientCss />
     </head>
 
     <body>

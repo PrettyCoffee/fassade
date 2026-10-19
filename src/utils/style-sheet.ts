@@ -35,8 +35,8 @@ export const updateSheet = (updater: StyleUpdate) => {
   const ssr = getSsrSheet()
   const csr = getCsrSheet()
   if (!csr) {
-    ssr.data = updater(ssrCache.data).trim()
+    ssr.data = updater(ssrCache.data)
   } else {
-    csr.data = updater(csr.data, ssr.data).trim()
+    csr.data = updater(csr.data === " " ? "" : csr.data, ssr.data)
   }
 }

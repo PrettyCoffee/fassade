@@ -48,10 +48,11 @@ const createStyles = (
 }
 
 const update = (css: string, prepend?: boolean, cssToReplace?: string) =>
-  updateSheet((data, ssr = "") => {
-    if ((ssr + data).includes(css)) return data
-    if (cssToReplace) return data.replace(cssToReplace, css)
-    return prepend ? css + data : data + css
+  updateSheet((existing, ssr = "") => {
+    if (ssr.includes(css)) return existing.replaceAll(css, "")
+    if (existing.includes(css)) return existing
+    if (cssToReplace) return existing.replace(cssToReplace, css)
+    return prepend ? css + existing : existing + css
   })
 
 /**

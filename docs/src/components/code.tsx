@@ -28,6 +28,7 @@ const Layout = styled.div`
     margin: 0;
   }
 `
+Layout.styles({}).inject()
 
 interface CodeProps {
   code: string
