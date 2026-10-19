@@ -64,6 +64,7 @@ const update = (css: string, prepend?: boolean, cssToReplace?: string) =>
 export const hash = (
   compiled: StyleNode | string,
   type: InjectionType = "class",
+  prepend = type === "global",
 ) => {
   const className = createClassName(compiled)
   const styles = createStyles(className, compiled, type)
@@ -72,10 +73,10 @@ export const hash = (
   // to allow replacing styles in <style /> instead of appending them.
   // This is required for using `createGlobalStyles` with themes
   if (type === "global") {
-    update(styles, true, styleCache["g"])
+    update(styles, prepend, styleCache["g"])
     styleCache["g"] = styles
   } else {
-    update(styles, false)
+    update(styles, prepend)
   }
 
   return className

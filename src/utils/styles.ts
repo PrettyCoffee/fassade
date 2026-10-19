@@ -4,6 +4,7 @@ import { parser, type StyleNode } from "./parser"
 
 interface StylesConfig {
   type?: InjectionType
+  prepend?: boolean
 }
 
 export class Styles {
@@ -22,7 +23,7 @@ export class Styles {
   public inject() {
     if (!this._injected) {
       const { type } = this.config ?? {}
-      this._class = hash(this.styles, type)
+      this._class = hash(this.styles, type, this.config?.prepend)
       this._injected = true
     }
     return this.class

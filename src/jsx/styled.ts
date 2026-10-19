@@ -108,10 +108,12 @@ const createComponent = (
   defaultType: ElementType,
   styles: Styles | ((props: object) => Styles),
 ) => {
-  const getStyles = (props: object, as = defaultType) => {
+  const getStyles = (props: object, as = defaultType, prepend = false) => {
     const base = stylesWithProps(getStylesFromType(as), props)
     const next = stylesWithProps(styles, props)
-    const merged = new Styles(merge(base?.styles ?? {}, next?.styles ?? {}))
+    const merged = new Styles(merge(base?.styles ?? {}, next?.styles ?? {}), {
+      prepend,
+    })
     return { base, next, merged }
   }
 
@@ -123,7 +125,8 @@ const createComponent = (
       return trimmed ? [trimmed] : []
     })
 
-    const styles = getStyles(props, type)
+    const prepend = classList.some(className => /^css[0-9]+$/.test(className))
+    const styles = getStyles(props, type, prepend)
 
     const baseClass = styles.base?.class ?? ""
     const nextClass = styles.next?.class ?? ""
