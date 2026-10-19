@@ -1,8 +1,7 @@
-import { Code, LiveCodeExample, Space } from "#components"
+import { CodeExample, LiveCodeExample, Section, Space } from "#components"
 
-import { Section } from "../components/section"
 import { cleanCode } from "../utils/clean-code"
-import example from "./code-example?raw"
+import example from "./example?raw"
 
 const previewHtml = '<p id="example">Hello from CodePreview</p>'
 const previewJs = cleanCode(`
@@ -42,7 +41,7 @@ export const App = () => (
     </Section>
 
     <Section index={2} title="Code Example">
-      <Code code={cleanCode(example)} />
+      <CodeExample name="sample.ts" code={cleanCode(example)} />
     </Section>
 
     <Section index={3} title="Live Editor">
