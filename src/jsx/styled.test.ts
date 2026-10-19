@@ -26,7 +26,7 @@ describe("Test styled", () => {
       "button",
       expect.objectContaining({
         id: "save",
-        className: expect.stringMatching(/^go\d+ external$/),
+        className: expect.stringMatching(/^css\d+ external$/),
       }),
     )
   })
@@ -38,7 +38,7 @@ describe("Test styled", () => {
     Button({ as: CustomButton, type: "button" })
 
     expect(jsx).toHaveBeenCalledWith(CustomButton, {
-      className: expect.stringMatching(/^go\d+$/),
+      className: expect.stringMatching(/^css\d+$/),
       type: "button",
     })
   })
@@ -53,7 +53,7 @@ describe("Test styled", () => {
       expect.objectContaining({
         tone: "tomato",
         title: "Notice",
-        className: expect.stringMatching(/^go\d+$/),
+        className: expect.stringMatching(/^css\d+$/),
       }),
     )
   })

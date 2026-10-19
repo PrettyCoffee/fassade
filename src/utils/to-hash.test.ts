@@ -4,12 +4,12 @@ import { toHash } from "./to-hash"
 
 describe("Test toHash", () => {
   it("returns the initial hash for an empty string", () => {
-    expect(toHash("")).toBe("go11")
+    expect(toHash("")).toBe("css11")
   })
 
   it("returns a deterministic class name", () => {
     expect(toHash("color:red;")).toBe(toHash("color:red;"))
-    expect(toHash("color:red;")).toMatch(/^go\d+$/)
+    expect(toHash("color:red;")).toMatch(/^css\d+$/)
   })
 
   it("distinguishes different input strings", () => {

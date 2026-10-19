@@ -8,7 +8,7 @@ const hashCache: Record<string, string> = {}
  */
 export const toHash = (string: string) =>
   (hashCache[string] ??=
-    "go" +
+    "css" +
     // eslint-disable-next-line @typescript-eslint/no-misused-spread
     [...string].reduce(
       // eslint-disable-next-line eslint/no-bitwise
