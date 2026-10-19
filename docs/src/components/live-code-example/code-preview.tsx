@@ -8,19 +8,26 @@ import initSwc, { transform } from "@swc/wasm-web"
 
 import { css, glob, keyframes, recipe, styled, variants } from "#lib/fassade"
 
-const ErrorBackdrop = styled.div(
-  ({ t }) => css`
+const Backdrop = styled.div<{ kind: "error" | "pending" }>(({ t, kind }) => [
+  css`
     position: absolute;
     inset: 0;
     padding: 1rem;
-    background: color-mix(in srgb, ${t("alert.error")} 5%, transparent);
     backdrop-filter: blur(2px);
 
     display: flex;
-    align-items: end;
     justify-content: center;
   `,
-)
+  kind === "error"
+    ? css`
+        background: color-mix(in srgb, ${t("alert.error")} 5%, transparent);
+        align-items: end;
+      `
+    : css`
+        background: ${t("bg.default")};
+        align-items: center;
+      `,
+])
 
 const ErrorSurface = styled.div(
   ({ t }) => css`
@@ -54,12 +61,72 @@ const ErrorOverlay = ({
   title: string
   message: string
 }) => (
-  <ErrorBackdrop role="alert">
+  <Backdrop role="alert" kind="error">
     <ErrorSurface>
       <ErrorTitle>{title}</ErrorTitle>
       <ErrorMessage>{message}</ErrorMessage>
     </ErrorSurface>
-  </ErrorBackdrop>
+  </Backdrop>
+)
+
+const boxAnimation = keyframes`
+  100% { translate: -1.75rem -1.75rem; }
+  0% { translate: -1.75rem -1.75rem; }
+  8.33% { translate: -1.75rem -1.75rem; }
+  16.66% { translate: -1.75rem -1.75rem; }
+
+  25% { translate: 1.75rem -1.75rem; }
+  33.33% { translate: 1.75rem -1.75rem; }
+  41.66% { translate: 1.75rem -1.75rem; }
+
+  50% { translate: 1.75rem 1.75rem; }
+  58.33% { translate: 1.75rem 1.75rem; }
+  66.66% { translate: 1.75rem 1.75rem; }
+
+  75% { translate: -1.75rem 1.75rem; }
+  83.33% { translate: -1.75rem 1.75rem; }
+  91.66% { translate: -1.75rem 1.75rem; }
+`
+const PendingBox = styled.div(
+  ({ t }) => css`
+    position: absolute;
+    background: ${t("bg.alt")};
+    height: 3rem;
+    width: 3rem;
+    border-radius: 0.5rem;
+
+    animation: ${boxAnimation} 3s infinite ease-out;
+    animation-play-state: paused;
+    &:nth-of-type(1) {
+      animation-delay: -0.5s;
+    }
+    &:nth-of-type(2) {
+      animation-delay: -1.5s;
+    }
+    &:nth-of-type(3) {
+      animation-delay: -2.5s;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation-play-state: running;
+    }
+  `,
+)
+
+const PendingText = styled.div(
+  ({ t }) => css`
+    color: ${t("text.muted")};
+    translate: 0 5rem;
+  `,
+)
+
+const PendingOverlay = () => (
+  <Backdrop kind="pending">
+    <PendingBox />
+    <PendingBox />
+    <PendingBox />
+    <PendingText>Rendering...</PendingText>
+  </Backdrop>
 )
 
 let swcInitialization: Promise<unknown> | undefined
@@ -104,11 +171,14 @@ interface CodePreviewProps {
 export const CodePreview = ({ html, js }: CodePreviewProps) => {
   const previewRef = useRef<HTMLDivElement>(null)
   const roots = useRef(new Map<Element, Root>())
+  const [pending, setPending] = useState(true)
   const [error, setError] = useState<string>()
 
   useEffect(() => {
     let canceled = false
     const currentRoots = roots.current
+    // oxlint-disable-next-line react/set-state-in-effect -- mark as pending while code is rendering
+    setPending(true)
 
     const render = (element: React.ReactNode, target = previewRef.current) => {
       if (!target || !previewRef.current?.contains(target))
@@ -152,12 +222,13 @@ export const CodePreview = ({ html, js }: CodePreviewProps) => {
           render,
         })
       } catch (error) {
-        if (canceled) return
-        setError(getErrorMessage(error))
+        if (!canceled) setError(getErrorMessage(error))
+      } finally {
+        if (!canceled) setPending(false)
       }
     }
 
-    const timer = setTimeout(() => void run(), 500)
+    const timer = setTimeout(() => void run(), 1000)
 
     return () => {
       canceled = true
@@ -171,6 +242,7 @@ export const CodePreview = ({ html, js }: CodePreviewProps) => {
     <Layout>
       <Preview ref={previewRef} />
       {error && <ErrorOverlay title="An Error Occured!" message={error} />}
+      {pending && <PendingOverlay />}
     </Layout>
   )
 }

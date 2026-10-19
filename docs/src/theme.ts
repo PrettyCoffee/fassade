@@ -58,6 +58,7 @@ const dark = {
   },
   bg: {
     default: neutral["900"],
+    alt: neutral["800"],
   },
   stroke: {
     default: neutral["500"],
@@ -77,6 +78,7 @@ const light: typeof dark = {
   },
   bg: {
     default: neutral["50"],
+    alt: neutral["100"],
   },
   stroke: {
     default: neutral["600"],
