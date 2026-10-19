@@ -1,6 +1,7 @@
 import { css, styled } from "#lib/fassade"
 
-import { Code } from "./code"
+import { Code } from "../code"
+import { CopyButton } from "./copy-button"
 
 const Layout = styled.div`
   position: relative;
@@ -17,8 +18,8 @@ const Figure = styled.figure(
     padding: 0.75rem 1rem;
     background-color: ${t("bg.default")};
     border: var(--border);
-    border-radius: var(--radius);
-    border-top-left-radius: 0;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
   `,
 )
 
@@ -53,6 +54,33 @@ const Caption = styled.figcaption(
   `,
 )
 
+const CopyButtonPosition = styled.div(
+  ({ t }) => css`
+    position: absolute;
+    top: -1.5rem;
+    right: calc(-0.8 * var(--border-width));
+
+    border: var(--border);
+    border-bottom: none;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.58rem;
+      right: 100%;
+      height: 0.8625rem;
+      width: 0.8625rem;
+
+      border-bottom: var(--border);
+      border-right: var(--border);
+      border-bottom-right-radius: var(--radius);
+      box-shadow: 0.4rem 0.4rem 0 0 ${t("bg.default")};
+    }
+  `,
+)
+
 interface CodeFileProps {
   name: string
   code: string
@@ -62,6 +90,11 @@ export const CodeExample = ({ code, name }: CodeFileProps) => (
   <Layout>
     <Figure>
       <Caption>{name}</Caption>
+
+      <CopyButtonPosition>
+        <CopyButton name={name} code={code} />
+      </CopyButtonPosition>
+
       <Code code={code} />
     </Figure>
   </Layout>

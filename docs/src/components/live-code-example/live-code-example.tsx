@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useState } from "react"
 
 import { styled } from "#lib/fassade"
 
-import { getWindow } from "../../utils/get-window"
+import { useCopy } from "../../hooks/use-copy"
 import { HBorder, VBorder } from "../border"
 import { CodeEditor } from "./code-editor"
 import { CodePreview } from "./code-preview"
@@ -38,7 +38,8 @@ export const LiveCodeExample = ({
 }: LiveCodeExampleProps) => {
   const [html, setHtml] = useState(initialHtml)
   const [js, setJs] = useState(initialJs)
-  const [copied, setCopied] = useState(false)
+
+  const { copied, copy } = useCopy()
 
   const jsEditor = <CodeEditor value={js} onChange={setJs} />
   const htmlEditor = <CodeEditor value={html} onChange={setHtml} />
@@ -46,20 +47,6 @@ export const LiveCodeExample = ({
   const reset = () => {
     setHtml(initialHtml)
     setJs(initialJs)
-  }
-
-  const copyTimeout = useRef(0)
-  const copy = async (active: string) => {
-    const window = getWindow()
-    if (!window) return
-
-    window.clearTimeout(copyTimeout.current)
-
-    const text = active === "HTML" ? html : js
-    await window.navigator.clipboard.writeText(text)
-    setCopied(true)
-
-    copyTimeout.current = window.setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -82,7 +69,7 @@ export const LiveCodeExample = ({
               {
                 icon: copied ? "copy-check" : "copy",
                 title: "Copy code",
-                onClick: active => void copy(active),
+                onClick: active => void copy(active === "HTML" ? html : js),
                 color: copied ? "alert.success" : undefined,
               },
             ]}

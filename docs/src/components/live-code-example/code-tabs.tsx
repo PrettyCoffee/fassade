@@ -43,6 +43,7 @@ const TabButton = styled(TabPattern.Tab)(
     border: 1px solid ${t("stroke.gentle")};
     &:hover {
       border-color: ${t("stroke.default")};
+      background: ${t("bg.alt")};
     }
   `,
 )
@@ -59,6 +60,7 @@ const TabActions = ({ actions }: { actions: CodeAction[] }) => {
         <IconButton
           {...action}
           key={action.title}
+          outlined
           onClick={() => activeTab && action.onClick?.(activeTab)}
         />
       ))}
