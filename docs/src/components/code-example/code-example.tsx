@@ -1,5 +1,6 @@
 import { css, styled } from "#lib/fassade"
 
+import { cleanCode } from "../../utils/clean-code"
 import { Code } from "../code"
 import { CopyButton } from "./copy-button"
 
@@ -86,16 +87,19 @@ interface CodeFileProps {
   code: string
 }
 
-export const CodeExample = ({ code, name }: CodeFileProps) => (
-  <Layout>
-    <Figure>
-      <Caption>{name}</Caption>
+export const CodeExample = ({ code, name }: CodeFileProps) => {
+  const cleaned = cleanCode(code)
+  return (
+    <Layout>
+      <Figure>
+        <Caption>{name}</Caption>
 
-      <CopyButtonPosition>
-        <CopyButton name={name} code={code} />
-      </CopyButtonPosition>
+        <CopyButtonPosition>
+          <CopyButton name={name} code={cleaned} />
+        </CopyButtonPosition>
 
-      <Code code={code} />
-    </Figure>
-  </Layout>
-)
+        <Code code={cleaned} />
+      </Figure>
+    </Layout>
+  )
+}
