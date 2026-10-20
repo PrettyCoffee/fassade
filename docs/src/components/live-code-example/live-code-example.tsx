@@ -34,7 +34,6 @@ interface LiveCodeExampleProps {
 export const LiveCodeExample = ({
   initialHtml = "",
   initialJs,
-  className,
 }: LiveCodeExampleProps) => {
   const [html, setHtml] = useState(initialHtml)
   const [js, setJs] = useState(initialJs)
@@ -50,7 +49,7 @@ export const LiveCodeExample = ({
   }
 
   return (
-    <div className={className} style={{ isolation: "isolate" }}>
+    <div className="full-width" style={{ isolation: "isolate" }}>
       <HBorder />
       <Layout>
         <Code>

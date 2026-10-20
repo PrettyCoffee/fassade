@@ -48,14 +48,10 @@ export const App = () => (
       <p>Try out the live editor below.</p>
 
       <h3>Vanilla</h3>
-      <LiveCodeExample
-        initialHtml={previewHtml}
-        initialJs={previewJs}
-        className="full-width"
-      />
+      <LiveCodeExample initialHtml={previewHtml} initialJs={previewJs} />
       <Space bottom="2rem" />
       <h3>React</h3>
-      <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
+      <LiveCodeExample initialJs={reactPreviewJs} />
     </Section>
 
     <Space bottom="100rem" />

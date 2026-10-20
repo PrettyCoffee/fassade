@@ -6,6 +6,7 @@ import { CopyButton } from "./copy-button"
 
 const Layout = styled.div`
   position: relative;
+  padding-top: 1.5rem;
 `
 
 const Figure = styled.figure(
@@ -15,7 +16,7 @@ const Figure = styled.figure(
     --radius: 0.5rem;
 
     position: relative;
-    margin: 1.5rem 0 0 0;
+    margin: 0;
     padding: 0.75rem 1rem;
     background-color: ${t("bg.default")};
     border: var(--border);

@@ -8,7 +8,8 @@ const contentWidth = css`
   width: 100%;
   max-width: 50rem;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `
 
 const H2 = styled.h2(
@@ -61,13 +62,25 @@ const Head = ({ index, children }: PropsWithChildren<{ index: number }>) => (
   </StickyHead>
 )
 
-const Content = styled.div`
-  padding: 1rem 0 2rem 0;
+const Content = styled.div(
+  ({ t }) => css`
+    padding: 1rem 0 2rem 0;
 
-  > :not(.full-width) {
-    ${contentWidth}
-  }
-`
+    > :not(.full-width) {
+      ${contentWidth}
+    }
+
+    > :not(:first-child) {
+      margin-top: 1rem;
+    }
+
+    p code {
+      background-color: ${t("bg.alt")};
+      padding: 0.125rem 0.25rem;
+      border-radius: 0.25rem;
+    }
+  `,
+)
 
 interface SectionProps {
   index: number
