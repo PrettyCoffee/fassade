@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 import { css, styled } from "#lib/fassade"
 
 import { Code } from "../code"
@@ -77,20 +79,28 @@ interface CodeEditorProps {
 }
 export const CodeEditor = ({
   placeholder,
-  value,
+  value: valueProp,
   onChange,
-}: CodeEditorProps) => (
-  <Layout>
-    <Preview code={value} preserveTrailingWhitespace />
-    <TextArea
-      autoComplete="off"
-      autoCorrect="off"
-      autoCapitalize="off"
-      spellCheck="false"
+}: CodeEditorProps) => {
+  const [didRender, setDidRender] = useState(false)
+  const value = didRender ? valueProp : ""
 
-      placeholder={placeholder}
-      value={value}
-      onChange={({ target }) => onChange?.(target.value)}
-    />
-  </Layout>
-)
+  // oxlint-disable-next-line react/set-state-in-effect -- hide code on first render, to match server and client html
+  useEffect(() => setDidRender(true), [])
+
+  return (
+    <Layout>
+      <Preview code={value} preserveTrailingWhitespace />
+      <TextArea
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
+
+        placeholder={placeholder}
+        value={value}
+        onChange={({ target }) => onChange?.(target.value)}
+      />
+    </Layout>
+  )
+}

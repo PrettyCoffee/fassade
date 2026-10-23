@@ -15,16 +15,25 @@ import { ResizableBorder } from "./resizable-border"
 const DEFAULT_SPLIT = 50
 const MIN_PANE_RATIO = 0.2
 
-const Layout = styled.div`
+const OuterLayout = styled.div`
   display: flex;
+  flex-direction: column;
+  height: 25rem;
+  isolation: isolate;
+`
+
+const InnerLayout = styled.div`
+  display: flex;
+  flex: 1;
+  min-height: 0;
 `
 
 const Code = styled.div`
   position: relative;
   flex: none;
-  height: 25rem;
+  min-height: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   @media (max-width: 40rem) {
     width: 50%;
@@ -52,11 +61,14 @@ interface LiveCodeExampleProps {
   initialHtml?: string
   initialJs: string
   className?: string
+  onChange?: (html: string, js: string) => void
 }
 
 export const LiveCodeExample = ({
   initialHtml = "",
   initialJs,
+  onChange,
+  className,
 }: LiveCodeExampleProps) => {
   const [html, setHtml] = useState(initialHtml)
   const [js, setJs] = useState(initialJs)
@@ -89,18 +101,25 @@ export const LiveCodeExample = ({
 
   const { copied, copy } = useCopy()
 
-  const jsEditor = <CodeEditor value={js} onChange={setJs} />
-  const htmlEditor = <CodeEditor value={html} onChange={setHtml} />
-
-  const resetCode = () => {
-    setHtml(initialHtml)
-    setJs(initialJs)
+  const setCode = (code: { html?: string; js?: string }) => {
+    if (code.html != null) setHtml(code.html)
+    if (code.js != null) setJs(code.js)
+    onChange?.(code.html ?? html, code.js ?? js)
   }
 
+  const jsEditor = <CodeEditor value={js} onChange={js => setCode({ js })} />
+
+  const htmlEditor = (
+    <CodeEditor value={html} onChange={html => setCode({ html })} />
+  )
+
   return (
-    <div className="full-width" style={{ isolation: "isolate" }}>
+    <OuterLayout
+      className={[className, "full-width"].filter(Boolean).join(" ")}
+      style={{ isolation: "isolate" }}
+    >
       <HBorder />
-      <Layout ref={layoutRef}>
+      <InnerLayout ref={layoutRef}>
         <Code style={{ width: `${split}%` }}>
           <CodeTabs
             tabs={
@@ -112,7 +131,7 @@ export const LiveCodeExample = ({
               {
                 icon: "erase",
                 title: "Revert changes",
-                onClick: resetCode,
+                onClick: () => setCode({ html: initialHtml, js: initialJs }),
               },
               {
                 icon: copied ? "copy-check" : "copy",
@@ -130,8 +149,8 @@ export const LiveCodeExample = ({
         />
 
         <CodePreview html={html} js={js} />
-      </Layout>
+      </InnerLayout>
       <HBorder />
-    </div>
+    </OuterLayout>
   )
 }

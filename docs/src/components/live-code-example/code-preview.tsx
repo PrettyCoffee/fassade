@@ -234,7 +234,9 @@ export const CodePreview = ({ html, js }: CodePreviewProps) => {
     return () => {
       canceled = true
       clearTimeout(timer)
-      for (const reactRoot of currentRoots.values()) reactRoot.unmount()
+      // defer, since cleanup can run during another root's commit phase
+      for (const reactRoot of currentRoots.values())
+        queueMicrotask(() => reactRoot.unmount())
       currentRoots.clear()
     }
   }, [html, js])

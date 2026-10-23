@@ -44,7 +44,7 @@ const globalStyles = css`
   body,
   #root {
     margin: 0;
-    min-height: 100svh;
+    height: 100%;
   }
 
   body {

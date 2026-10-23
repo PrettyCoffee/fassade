@@ -2,6 +2,7 @@ import { createPages } from "waku"
 import adapter from "waku/adapters/default"
 
 import { App } from "./app/app"
+import { Playground } from "./app/playground"
 import { Layout } from "./layout"
 import { Root } from "./root"
 
@@ -22,6 +23,12 @@ const pages = createPages(async ({ createRoot, createLayout, createPage }) => [
     render: "static",
     path: "/",
     component: App,
+  }),
+
+  createPage({
+    render: "static",
+    path: "/playground",
+    component: Playground,
   }),
 ])
 
