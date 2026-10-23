@@ -3,15 +3,12 @@ import { type PropsWithChildren } from "react"
 import { HBorder } from "#components"
 import { css, styled } from "#lib/fassade"
 
-const Grid = styled.div(
+const FullHeight = styled.div(
   ({ t }) => css`
+    display: flex;
+    flex-direction: column;
     border-inline: 1px solid ${t("stroke.gentle")};
     margin: 0 0.5rem;
-
-    display: grid;
-    grid-template:
-      "header header" auto
-      "main side" 1fr / 1fr 15rem;
   `,
 )
 
@@ -64,29 +61,8 @@ const Headline = styled.h1(
   `,
 )
 
-const Side = styled.aside`
-  grid-area: side;
-  position: sticky;
-  top: 4rem;
-  padding: 1rem;
-  align-self: start;
-`
-
-const Main = styled.main(
-  ({ t }) => css`
-    grid-area: main;
-    border-right: 1px solid ${t("stroke.gentle")};
-    padding-bottom: 2rem;
-  `,
-)
-
-const MainLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
 export const Layout = ({ children }: PropsWithChildren) => (
-  <Grid>
+  <FullHeight>
     <Header>
       <HeaderContent>
         <Headline>Fassade</Headline>
@@ -94,14 +70,6 @@ export const Layout = ({ children }: PropsWithChildren) => (
       <HeaderBorder />
     </Header>
 
-    <Side>
-      <nav>
-        <p>Side content</p>
-      </nav>
-    </Side>
-
-    <Main>
-      <MainLayout>{children}</MainLayout>
-    </Main>
-  </Grid>
+    {children}
+  </FullHeight>
 )

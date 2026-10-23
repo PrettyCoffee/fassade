@@ -5,6 +5,7 @@ import { type FC } from "react"
 import { LiveCodeExample, Section, Space } from "#components"
 
 import { cleanCode } from "../utils/clean-code"
+import { LayoutWithNav } from "./layouts/layout-with-nav"
 
 const getSectionList = () => readdir("./src/app/sections")
 const getSectionComponent = (fileName: string) =>
@@ -72,7 +73,7 @@ render(<Counter />)
 export const App = async () => {
   const sections = await getSections()
   return (
-    <>
+    <LayoutWithNav>
       {sections.map(({ index, title, Component }) => (
         <Section key={index} index={index} title={title}>
           <Component />
@@ -94,6 +95,6 @@ export const App = async () => {
       </Section>
 
       <Space bottom="100rem" />
-    </>
+    </LayoutWithNav>
   )
 }
