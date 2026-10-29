@@ -5,7 +5,7 @@ import { useRef, useState } from "react"
 import { styled } from "#lib/fassade"
 
 import { useCopy } from "../../hooks/use-copy"
-import { getWindow } from "../../utils/get-window"
+import { remToPx } from "../../utils/rem-to-px"
 import { HBorder } from "../border"
 import { CodeEditor } from "./code-editor"
 import { CodePreview } from "./code-preview"
@@ -39,14 +39,6 @@ const Code = styled.div`
     width: 50%;
   }
 `
-
-const remToPx = (rem: number) => {
-  const document = getWindow()?.document
-  if (!document) return 16
-  return (
-    rem * Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
-  )
-}
 
 const snapResizing = (ratio: number, width: number) => {
   const centerSnapRatio = Math.ceil(100 / (width / remToPx(1))) / 100

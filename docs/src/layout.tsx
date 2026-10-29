@@ -8,6 +8,7 @@ const FullHeight = styled.div(
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: auto;
     border-inline: 1px solid ${t("stroke.gentle")};
     margin: 0 0.5rem;
   `,

@@ -94,6 +94,34 @@ export const App = async () => {
         <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
       </Section>
 
+      <Section index={3} title="Live Editor">
+        <p>Try out the live editor below.</p>
+
+        <h3>Vanilla</h3>
+        <LiveCodeExample
+          initialHtml={previewHtml}
+          initialJs={previewJs}
+          className="full-width"
+        />
+        <Space bottom="2rem" />
+        <h3>React</h3>
+        <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
+      </Section>
+
+      <Section index={4} title="Live Editor">
+        <p>Try out the live editor below.</p>
+
+        <h3>Vanilla</h3>
+        <LiveCodeExample
+          initialHtml={previewHtml}
+          initialJs={previewJs}
+          className="full-width"
+        />
+        <Space bottom="2rem" />
+        <h3>React</h3>
+        <LiveCodeExample initialJs={reactPreviewJs} className="full-width" />
+      </Section>
+
       <Space bottom="100rem" />
     </LayoutWithNav>
   )

@@ -23,5 +23,5 @@ export const ExtractClientCss = () => {
     ? getCsrSheet()?.data // browser: read from DOM
     : use((promise ??= extractCss())) // prerender: collect extracted styles
 
-  return getSetup().jsx("style", { id: FASSADE_ID.CSR }, css)
+  return getSetup().jsx("style", { id: FASSADE_ID.CSR }, css || " ")
 }

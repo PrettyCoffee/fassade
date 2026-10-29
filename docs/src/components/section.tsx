@@ -12,7 +12,7 @@ const contentWidth = css`
   padding-right: 1rem;
 `
 
-const H2 = styled.h2(
+const H2 = styled.span(
   ({ t }) => css`
     ${contentWidth}
     font-family: ${t("font.mono")};
@@ -51,15 +51,28 @@ const Index = styled.span(
 const HBorderAligned = styled(HBorder)`
   margin-top: -1px;
 `
+const visuallyHidden = css`
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  padding: 0;
+  border: 0;
+`.inject()
+
 const Head = ({ index, children }: PropsWithChildren<{ index: number }>) => (
-  <StickyHead className="full-width">
-    <HBorderAligned />
-    <H2>
-      <Index>{String(index).padStart(2, "0")}</Index>
-      {children}
-    </H2>
-    <HBorder />
-  </StickyHead>
+  <>
+    <h2 className={visuallyHidden}>{children}</h2>
+    <StickyHead className="full-width">
+      <HBorderAligned />
+      <H2 aria-hidden>
+        <Index>{String(index).padStart(2, "0")}</Index>
+        {children}
+      </H2>
+      <HBorder />
+    </StickyHead>
+  </>
 )
 
 const Content = styled.div(

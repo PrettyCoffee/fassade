@@ -2,6 +2,8 @@ import { type PropsWithChildren } from "react"
 
 import { css, styled } from "#lib/fassade"
 
+import { Navigation } from "./navigation"
+
 const Grid = styled.div`
   display: flex;
   flex-direction: row-reverse;
@@ -31,9 +33,7 @@ const MainLayout = styled.div`
 export const LayoutWithNav = ({ children }: PropsWithChildren) => (
   <Grid>
     <Side>
-      <nav>
-        <p>Side content</p>
-      </nav>
+      <Navigation />
     </Side>
 
     <Main>
